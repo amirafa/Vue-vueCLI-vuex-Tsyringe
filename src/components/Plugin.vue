@@ -33,11 +33,15 @@ import axios from "axios";
 })
 export default class Plugin extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  @Prop()  plugin!: string;
-  @Prop()  pluginStatus!: string;
-  @Prop()  isToggled!: string;
-  @Prop()  tabData!: string;
-  @Prop()  tabNumber!: string;
+  @Prop()  plugin!: any;
+  @Prop()  pluginStatus!: any;
+  @Prop()  isToggled!: any;
+  @Prop()  tabData!: any;
+  @Prop()  tabNumber!: any;
+  
+  status: any;
+  allow: any;
+  dataCopy: any;
 
   data() {
     return {
@@ -52,6 +56,8 @@ export default class Plugin extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
     console.log("Plugin mounted");
+    this.dataCopy = JSON.parse(
+      JSON.stringify(Object.assign({}, this.$props.tabData))
     this.checkCb();
   }
 
@@ -65,9 +71,9 @@ export default class Plugin extends Vue {
     }
 
     checkToggle() {
-      this.$refs.checkb.disabled = !prop.value.isToggled;
+      this.$refs.checkb.disabled = !this.$props.isToggled;
       let nodes = this.$refs.card.getElementsByTagName("*");
-      if (!prop.value.isToggled) {
+      if (this.$props.isToggled) {
         let nodes = this.$refs.card.getElementsByTagName("*");
         for (var i = 0; i < nodes.length; i++) {
           nodes[i].disabled = true;
@@ -83,85 +89,85 @@ export default class Plugin extends Vue {
     }
 
     setActive() {
-      let noSpace = props.plugin.title.replace(/\s/g, "");
+      let noSpace = this.$props.plugin.title.replace(/\s/g, "");
       let lowCase = noSpace.toLowerCase();
       //console.log(props.pluginStatus.active,lowCase)
-      props.pluginStatus.active.forEach((element) => {
+      this.$props.pluginStatus.active.forEach((element:any) => {
         if (element == lowCase) {
           //console.log(element, lowCase);
           //console.log(root);
-          status.value = 1;
-          checkb.value.checked = true;
+          this.status = 1;
+          this.$refs.checkb.checked = true;
         }
       });
     }
 
     setDisabled() {
-      let noSpace = props.plugin.title.replace(/\s/g, "");
+      let noSpace = this.$props.plugin.title.replace(/\s/g, "");
       let lowCase = noSpace.toLowerCase();
       //console.log(props.pluginStatus.active,lowCase)
-      props.pluginStatus.disabled.forEach((element) => {
+      this.$props.pluginStatus.disabled.forEach((element:any) => {
         if (element == lowCase) {
           //console.log(element, lowCase);
-          status.value = 2;
-          checkb.value.disabled = true;
+          this.status = 2;
+          this.$refs.checkb.disabled = true;
         }
       });
     }
 
     setInactive() {
-      let noSpace = props.plugin.title.replace(/\s/g, "");
+      let noSpace = this.$props.plugin.title.replace(/\s/g, "");
       let lowCase = noSpace.toLowerCase();
       //console.log(props.pluginStatus.active,lowCase)
-      props.pluginStatus.inactive.forEach((element) => {
+      this.$props.pluginStatus.inactive.forEach((element:any) => {
         if (element == lowCase) {
           //console.log(element, lowCase);
-          status.value = 3;
-          checkb.value.checked = false;
+          this.status = 3;
+          this.$refs.checkb.checked = false;
         }
       });
     }
 
     setCb() {
-      setCbLabel();
-      setNewData();
-      pushData();
+      this.setCbLabel();
+      this.setNewData();
+      this.pushData();
       //console.log(dataCopy.value)
     }
 
     setCbLabel() {
-      allow.value.style.fontSize = "1em";
-      if (checkb.value.disabled) {
-        allow.value.innerHTML = "disabled";
-        allow.value.style.color = "grey";
-      } else if (checkb.value.checked) {
-        allow.value.innerHTML = "allowed ";
-        allow.value.style.color = "#0d6efd";
+      this.allow.style.fontSize = "1em";
+      if (this.$refs.checkb.disabled) {
+        this.allow.innerHTML = "disabled";
+        this.allow.style.color = "grey";
+      } else if (this.$refs.checkb.checked) {
+        this.allow.innerHTML = "allowed ";
+        this.allow.style.color = "#0d6efd";
       } else {
-        allow.value.innerHTML = "blocked ";
-        allow.value.style.color = "#dc3545";
+        this.allow.innerHTML = "blocked ";
+        this.allow.style.color = "#dc3545";
       }
     }
 
     setNewData() {
-      let noSpace = props.plugin.title.replace(/\s/g, "");
+      let noSpace = this.$props.plugin.title.replace(/\s/g, "");
       let lowCase = noSpace.toLowerCase();
-      let tn = prop.value.tabNumber;
+      let tn = this.$props.tabNumber;
       //
-      if (status.value == 1) {
-        let arr = dataCopy.data.tabdata[`tab${tn}`].active;
+      if (this.status== 1) {
+        let arr = this.dataCopy.data.tabdata[`tab${tn}`].active;
         let itemIndex = arr.indexOf(lowCase);
-        dataCopy.data.tabdata[`tab${tn}`].active.splice(itemIndex, 1);
-        dataCopy.data.tabdata[`tab${tn}`].inactive.push(lowCase);
-        status.value = 3;
+        this.dataCopy.data.tabdata[`tab${tn}`].active.splice(itemIndex, 1);
+        this.dataCopy.data.tabdata[`tab${tn}`].inactive.push(lowCase);
+        this.status = 3;
         //console.log("active : ",dataCopy.data.tabdata.tab1.active);
         //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
-      } else if (status.value == 3) {
-        let arr = dataCopy.data.tabdata[`tab${tn}`].active;
+      } else if (this.status == 3) {
+        let arr = this.dataCopy.data.tabdata[`tab${tn}`].active;
         let itemIndex = arr.indexOf(lowCase);
-        dataCopy.data.tabdata[`tab${tn}`].inactive.splice(itemIndex, 1);
-        dataCopy.data.tabdata[`tab${tn}`].active.push(lowCase);
-        status.value = 1;
+        this.dataCopy.data.tabdata[`tab${tn}`].inactive.splice(itemIndex, 1);
+        this.dataCopy.data.tabdata[`tab${tn}`].active.push(lowCase);
+        this.status = 1;
         //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
         //console.log("active : ",dataCopy.data.tabdata.tab1.active);
       }
@@ -169,7 +175,7 @@ export default class Plugin extends Vue {
     }
 
     pushData() {
-      console.log("Posted data = ", dataCopy);
+      console.log("Posted data = ", this.dataCopy);
       const headers = {
         "Access-Control-Allow-Origin": "*",
         Accept: "application/json, text/plain, */*",
@@ -179,7 +185,7 @@ export default class Plugin extends Vue {
         .post(
           "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130",
           //"http://localhost:3000/data",
-          dataCopy,
+          this.dataCopy,
           { headers }
         )
         .then(function (response) {
