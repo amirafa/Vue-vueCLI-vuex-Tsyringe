@@ -2,7 +2,7 @@
   <div class="d-flex min-vh-100">
     <SideNav :data="data" @is-toggled="getToggle" />
     <div v-if="showData()" class="d-flex flex-grow-1">
-      <router-view :data="data" :is-toggled="isToggled"></router-view>
+      <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
       <div class="row d-flex justify-content-center align-items-center vh-100">
@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
-import { Global } from "./class/Service.js";
+import { Global } from "./class/Service";
 
 @Component({
   components: {
@@ -27,20 +27,32 @@ import { Global } from "./class/Service.js";
   },
 })
 export default class App extends Vue {
+  global: any;
+  isData: any;
+  fdata:any
+  isToggled: any;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
-      data : "",
+      fdata : "",
       isData:false,
       isToggled : false,
       global : new Global()
     };
   }
 
-  mounted(){
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async mounted(){
     console.log("mounted");
-    this.data = 
-      
+    try {
+        this.fdata = await this.global.fetchData(this.global);
+        this.isData = true;
+        //console.log(this.fdata/*,this.isData,this.isToggled,this.global*/)
+      } catch (err) {
+        console.log("App error:",err)
+      }
     }
+
     
   }
   // // @Prop()
@@ -66,7 +78,7 @@ export default class App extends Vue {
   // show(a) {
   //   this.msg += ` ${a.last}`;
   // }
-}
+
 </script>
 
 <style>
