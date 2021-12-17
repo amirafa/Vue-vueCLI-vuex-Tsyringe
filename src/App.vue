@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex min-vh-100">
-    <SideNav :fdata="fdata" @is-toggled="getToggle($event)" />
+    <SideNav @is-toggled="getToggle($event)" />
     <div v-if="showData()" class="d-flex flex-grow-1">
       <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
@@ -28,67 +28,74 @@ import { Global } from "./class/Service";
 })
 export default class App extends Vue {
   global: any;
-  isData: any;
-  fdata:any
+  isData: boolean|undefined;
+  fdata: any;
   isToggled: any;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
-      fdata : "",
-      isData:false,
-      isToggled : false,
-      global : new Global()
+      fdata: "",
+      isData: false,
+      isToggled: false,
+      global: new Global(),
     };
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async mounted(){
+  mounted() {
     console.log("App mounted");
-    try {
-        this.fdata = await this.global.fetchData(this.global);
+    this.getData()
+      .then((respnse) => {
+        this.fdata = respnse;
+        console.log(this.fdata);
         this.isData = true;
-        //console.log(this.fdata/*,this.isData,this.isToggled,this.global*/)
-      } catch (err) {
-        console.log("App error:",err)
-      }
-      this.showData()
-    }
-
-    getToggle(toggle: any) {
-      this.isToggled = toggle;
-      //console.log("changed ",toggle)
-    }
-
-    showData() {
-      return this.isData;
-    }
-
-    
+        this.showData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  // // @Prop()
-  // // private msg!: string;
-  // msg = "";
-  // name = "";
 
-  // data() {
-  //   return {
-  //     msg: "hello",
-  //     nme: "amir",
-  //   };
-  // }
-  // // mounted() {
-  // //   this.name="amir"
-  // // }
+  async getData(this: any) {
+    try {
+      return await this.global.fetchData(this.global);
+    } catch (err) {
+      return err;
+    }
+  }
 
-  // doSth(): void {
-  //   this.msg = "bye";
-  //   this.name = "ali";
-  // }
+  getToggle(toggle: boolean):void {
+    this.isToggled = toggle;
+    //console.log("changed ",toggle)
+  }
 
-  // show(a) {
-  //   this.msg += ` ${a.last}`;
-  // }
+  showData() {
+    return this.isData;
+  }
+}
+// // @Prop()
+// // private msg!: string;
+// msg = "";
+// name = "";
 
+// data() {
+//   return {
+//     msg: "hello",
+//     nme: "amir",
+//   };
+// }
+// // mounted() {
+// //   this.name="amir"
+// // }
+
+// doSth(): void {
+//   this.msg = "bye";
+//   this.name = "ali";
+// }
+
+// show(a) {
+//   this.msg += ` ${a.last}`;
+// }
 </script>
 
 <style>

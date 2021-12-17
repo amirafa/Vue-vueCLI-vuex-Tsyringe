@@ -33,7 +33,7 @@
           <label
             class="me-1 form-check-label text-dark"
             for="flexSwitchCheckDefault"
-            >All plugins {{ cbText }}</label
+            >All plugins enabled</label
           >
           <div class="d-flex form-check form-switch p-0 m-0">
             <input
@@ -56,28 +56,55 @@
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 //import { useRoute,useRouter } from "vue-router";
 
-
 @Component({
-  components: {
-  },
+  components: {},
 })
-export default class App extends Vue {
+export default class SideNav extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  @Prop() fData!: undefined;
+  allEnable: any;
+  cbText: any;
+
+  @Emit("allEnable")
+
   data() {
     return {
       allEnable: true,
       cbText: "",
       routerLinks: undefined,
-      sideNav:undefined,
-      route :this.$route,
-      router:this.$router,
-      routeName:undefined
+      sideNav: undefined,
+      router: this.$router,
+      routeName: undefined,
     };
   }
 
   mounted() {
-      console.log("SideNav mounted")
+    console.log("SideNav mounted * route is : ", this.$route);
+    this.doThis();
   }
+
+  doThis() {
+      const routerLinks:any = this.$refs.routerLinks;
+      if (this.$route.path != "/marketing" && this.$route.path != "/") {
+        //console.log("if");
+        //console.log(routerLinks.firstChild.classList);
+        routerLinks.firstChild.classList.remove(
+          "router-link-exact-active"
+        );
+      } else {
+        //console.log("else");
+        //console.log(routerLinks.firstChild.classList);
+        routerLinks.firstChild.classList.add("router-link-exact-active");
+      }
+    }
+
+    navClick() {
+      console.log("clicked");
+    }
+
+    changeCB() {
+      this.allEnable = !this.allEnable;
+    }
 
 
 }
