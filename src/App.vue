@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex min-vh-100">
-    <SideNav :data="data" @is-toggled="getToggle" />
+    <SideNav :fdata="fdata" @is-toggled="getToggle($event)" />
     <div v-if="showData()" class="d-flex flex-grow-1">
       <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
@@ -43,7 +43,7 @@ export default class App extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async mounted(){
-    console.log("mounted");
+    console.log("App mounted");
     try {
         this.fdata = await this.global.fetchData(this.global);
         this.isData = true;
@@ -51,6 +51,16 @@ export default class App extends Vue {
       } catch (err) {
         console.log("App error:",err)
       }
+      this.showData()
+    }
+
+    getToggle(toggle: any) {
+      this.isToggled = toggle;
+      //console.log("changed ",toggle)
+    }
+
+    showData() {
+      return this.isData;
     }
 
     

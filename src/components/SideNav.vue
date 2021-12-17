@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { useRoute,useRouter } from "vue-router";
+//import { useRoute,useRouter } from "vue-router";
 
 
 @Component({
@@ -69,14 +69,14 @@ export default class App extends Vue {
       cbText: "",
       routerLinks: undefined,
       sideNav:undefined,
-      route :useRoute(),
-      router:useRouter(),
+      route :this.$route,
+      router:this.$router,
       routeName:undefined
     };
   }
 
   mounted() {
-      console.log("mounted")
+      console.log("SideNav mounted")
   }
 
 
