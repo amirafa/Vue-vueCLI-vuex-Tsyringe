@@ -9,8 +9,27 @@ import Plugin from "../components/Plugin.vue";
     },
 })
 export class useTab extends Vue {
+
+
+    tabData: any;
+    tabn: any;
+    allPlugins: any;
+    allPluginsArr: unknown[] | undefined;
+    tabPlugins: any;
+    pluginStatus: any;
+    loading: boolean | undefined;
+    global: any;
+    title: any;
+    activeArr: any;
+    disabledArr: any;
+    inactiveArr: any;
+    tabDatae: any;
+    tabPluginsArr: any;
+
+
     data() {
         return {
+            tab:1,
             loading: false,
             tabData: "",
             pluginsActivate: undefined,
@@ -43,10 +62,10 @@ export class useTab extends Vue {
             });
     }
 
-    setData(response) {
+    setData(response:any) {
         this.allPlugins = this.tabData.data.plugins;
         this.allPluginsArr = Object.values(this.allPlugins);
-        this.setTitle(tab);
+        this.setTitle(this.tabn);
         this.getStatus();
         this.tabPlugins = this.pluginStatus.active
             .concat(this.pluginStatus.disabled)
@@ -65,29 +84,29 @@ export class useTab extends Vue {
         }
     }
 
-    setTitle(params) {
+    setTitle(params:number) {
         if (params == 1) this.title = this.tabData.data.tabdata.tab1.title;
         else if (params == 2) this.title = this.tabData.data.tabdata.tab2.title;
         else if (params == 3) this.title = this.tabData.data.tabdata.tab3.title;
     }
 
     getStatus() {
-        this.getStatusArr(tab);
+        this.getStatusArr(this.tabn);
         //active--------------
-        this.activeArr.forEach((element) => {
+        this.activeArr.forEach((element:string) => {
             this.pluginStatus.active.push(element);
         });
         //disabled
-        this.disabledArr.forEach((element) => {
+        this.disabledArr.forEach((element:string) => {
             this.pluginStatus.disabled.push(element);
         });
         //inactive
-        this.inactiveArr.forEach((element) => {
+        this.inactiveArr.forEach((element:string) => {
             this.pluginStatus.inactive.push(element);
         });
     }
 
-    getStatusArr(params) {
+    getStatusArr(params:number) {
         if (params == 1) {
             this.activeArr = this.tabData.data.tabdata.tab1.active;
             this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
