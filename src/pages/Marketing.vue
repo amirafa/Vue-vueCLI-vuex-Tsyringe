@@ -34,6 +34,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Plugin from "../components/Plugin.vue";
+import { Global } from "../class/Service";
 
 @Component({
   components: {
@@ -49,7 +50,7 @@ export default class Marketing extends Vue {
   allPluginsArr: any;
   tabPlugins: any;
   pluginStatus: any;
-  loading: boolean | undefined;
+  loading: any;
   global: any;
   title: any;
   activeArr: any;
@@ -79,6 +80,7 @@ export default class Marketing extends Vue {
       activeArr: [],
       disabledArr: [],
       inactiveArr: [],
+      global: new Global(),
     };
   }
 

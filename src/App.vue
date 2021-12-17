@@ -28,7 +28,7 @@ import { Global } from "./class/Service";
 })
 export default class App extends Vue {
   global: any;
-  isData: boolean|undefined;
+  isData: any;
   fdata: any;
   isToggled: any;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
