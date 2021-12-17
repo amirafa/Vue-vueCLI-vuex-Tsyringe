@@ -77,9 +77,9 @@ export default class Marketing extends Vue {
         disabled: [],
         inactive: [],
       },
-      activeArr: [],
-      disabledArr: [],
-      inactiveArr: [],
+      activeArr: undefined,
+      disabledArr: undefined,
+      inactiveArr: undefined,
       global: new Global(),
     };
   }
@@ -96,6 +96,14 @@ export default class Marketing extends Vue {
       });
   }
 
+  async getData(this: any) {
+    try {
+      return await this.global.fetchData(this.global);
+    } catch (err) {
+      return err;
+    }
+  }
+
   setData() {
     this.allPlugins = this.tabData.data.plugins;
     this.allPluginsArr = Object.values(this.allPlugins);
@@ -110,16 +118,7 @@ export default class Marketing extends Vue {
     this.loading = true;
   }
 
-  async getData(this: any) {
-    try {
-      return await this.global.fetchData(this.global);
-    } catch (err) {
-      return err;
-    }
-  }
-
-  setTitle(params: number) {
-    console.log("here");
+  setTitle(params: any) {
     if (params == 1) this.title = this.tabData.data.tabdata.tab1.title;
     else if (params == 2) this.title = this.tabData.data.tabdata.tab2.title;
     else if (params == 3) this.title = this.tabData.data.tabdata.tab3.title;
@@ -155,6 +154,7 @@ export default class Marketing extends Vue {
       this.disabledArr = this.tabDatae.data.tabdata.tab3.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab3.inactive;
     }
+    console.log(this.activeArr)
   }
 
   getTabPlugins() {
