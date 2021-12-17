@@ -143,7 +143,6 @@ export default class Marketing extends Vue {
   getStatusArr(params: number) {
     if (params == 1) {
       this.activeArr = this.tabData.data.tabdata.tab1.active;
-      console.log(this.activeArr);
       this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
     } else if (params == 2) {

@@ -48,7 +48,7 @@ export default class Plugin extends Vue {
     return {
       checkb: null,
       card: null,
-      allow: undefined,
+      allow: null,
       status: undefined,
       dataCopy: undefined,
 
@@ -60,6 +60,7 @@ export default class Plugin extends Vue {
     console.log("Plugin mounted");
     this.card = this.$refs.card;
     this.checkb= this.$refs.checkb;
+    this.allow= this.$refs.allow;
     this.dataCopy = JSON.parse(
       JSON.stringify(Object.assign({}, this.$props.tabData))
     );
@@ -203,4 +204,7 @@ export default class Plugin extends Vue {
 </script>
 
 <style>
+.cb-text {
+  font-size: 0.75em !important;
+}
 </style>
