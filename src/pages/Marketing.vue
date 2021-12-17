@@ -61,7 +61,7 @@ export default class Marketing extends Vue {
 
   data() {
     return {
-      tab: 1,
+      tabn: 1,
       loading: false,
       tabData: "",
       pluginsActivate: undefined,
@@ -77,9 +77,9 @@ export default class Marketing extends Vue {
         disabled: [],
         inactive: [],
       },
-      activeArr: undefined,
-      disabledArr: undefined,
-      inactiveArr: undefined,
+      activeArr: [],
+      disabledArr: [],
+      inactiveArr: [],
       global: new Global(),
     };
   }
@@ -143,6 +143,7 @@ export default class Marketing extends Vue {
   getStatusArr(params: number) {
     if (params == 1) {
       this.activeArr = this.tabData.data.tabdata.tab1.active;
+      console.log(this.activeArr);
       this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
     } else if (params == 2) {
@@ -154,8 +155,9 @@ export default class Marketing extends Vue {
       this.disabledArr = this.tabDatae.data.tabdata.tab3.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab3.inactive;
     }
-    console.log(this.activeArr)
+    
   }
+
 
   getTabPlugins() {
     this.allPluginsArr.forEach((a: any) => {
