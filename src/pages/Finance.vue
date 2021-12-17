@@ -85,17 +85,20 @@ export default class Marketing extends Vue {
   }
 
   mounted() {
+    console.log("tab mounted");
     this.getData()
       .then((response) => {
+        console.log("here");
         this.tabData = response;
-        this.setData(response);
+        this.setData();
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  setData(response: any) {
+  setData() {
+    
     this.allPlugins = this.tabData.data.plugins;
     this.allPluginsArr = Object.values(this.allPlugins);
     this.setTitle(this.tabn);
@@ -109,7 +112,7 @@ export default class Marketing extends Vue {
     this.loading = true;
   }
 
-  async getData() {
+  async getData(this: any) {
     try {
       return await this.global.fetchData(this.global);
     } catch (err) {

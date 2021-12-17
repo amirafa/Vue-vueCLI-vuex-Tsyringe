@@ -85,17 +85,18 @@ export default class Marketing extends Vue {
   }
 
   mounted() {
+    console.log("tab mounted");
     this.getData()
       .then((response) => {
         this.tabData = response;
-        this.setData(response);
+        this.setData();
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  setData(response: any) {
+  setData() {
     this.allPlugins = this.tabData.data.plugins;
     this.allPluginsArr = Object.values(this.allPlugins);
     this.setTitle(this.tabn);
@@ -109,7 +110,7 @@ export default class Marketing extends Vue {
     this.loading = true;
   }
 
-  async getData() {
+  async getData(this: any) {
     try {
       return await this.global.fetchData(this.global);
     } catch (err) {
@@ -118,6 +119,7 @@ export default class Marketing extends Vue {
   }
 
   setTitle(params: number) {
+    console.log("here");
     if (params == 1) this.title = this.tabData.data.tabdata.tab1.title;
     else if (params == 2) this.title = this.tabData.data.tabdata.tab2.title;
     else if (params == 3) this.title = this.tabData.data.tabdata.tab3.title;
