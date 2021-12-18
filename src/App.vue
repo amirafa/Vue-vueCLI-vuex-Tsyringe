@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue,Watch } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Global } from "./class/Service";
 
@@ -27,17 +27,17 @@ import { Global } from "./class/Service";
   },
 })
 export default class App extends Vue {
-  global: any;
-  isData: any;
+  global: Global = new Global();
+  isData: boolean = false;
   fdata: any;
-  isToggled: any;
+  isToggled: boolean=false;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       fdata: "",
-      isData: false,
-      isToggled: false,
-      global: new Global(),
+      isData: undefined,
+      isToggled: undefined,
+      global: undefined,
     };
   }
 
@@ -47,7 +47,7 @@ export default class App extends Vue {
     this.getData()
       .then((respnse) => {
         this.fdata = respnse;
-        console.log(this.fdata);
+        //console.log(this.fdata);
         this.isData = true;
         this.showData();
       })
@@ -55,7 +55,6 @@ export default class App extends Vue {
         console.log(err);
       });
   }
-
 
   async getData(this: any) {
     try {
@@ -65,8 +64,8 @@ export default class App extends Vue {
     }
   }
 
-  getToggle(toggle: boolean):void {
-    console.log("App : toggle change recieve")
+  getToggle(toggle: boolean): void {
+    console.log("App : toggle change recieve");
     this.isToggled = toggle;
   }
 
@@ -78,7 +77,6 @@ export default class App extends Vue {
 // // private msg!: string;
 // msg = "";
 // name = "";
-
 </script>
 
 <style>

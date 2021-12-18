@@ -51,7 +51,6 @@ export default class Plugin extends Vue {
       allow: null,
       status: undefined,
       dataCopy: undefined,
-
     };
   }
 
