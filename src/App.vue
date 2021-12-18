@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex min-vh-100">
-    <SideNav @is-toggled="getToggle($event)" />
+    <SideNav @change-cb="getToggle($event)" />
     <div v-if="showData()" class="d-flex flex-grow-1">
       <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue,Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Global } from "./class/Service";
 
@@ -56,6 +56,7 @@ export default class App extends Vue {
       });
   }
 
+
   async getData(this: any) {
     try {
       return await this.global.fetchData(this.global);
@@ -65,8 +66,8 @@ export default class App extends Vue {
   }
 
   getToggle(toggle: boolean):void {
+    console.log("App : toggle change recieve")
     this.isToggled = toggle;
-    //console.log("changed ",toggle)
   }
 
   showData() {
@@ -78,24 +79,6 @@ export default class App extends Vue {
 // msg = "";
 // name = "";
 
-// data() {
-//   return {
-//     msg: "hello",
-//     nme: "amir",
-//   };
-// }
-// // mounted() {
-// //   this.name="amir"
-// // }
-
-// doSth(): void {
-//   this.msg = "bye";
-//   this.name = "ali";
-// }
-
-// show(a) {
-//   this.msg += ` ${a.last}`;
-// }
 </script>
 
 <style>

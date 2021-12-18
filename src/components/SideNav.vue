@@ -40,7 +40,7 @@
               class="d-flex flex-row align-self-center form-check-input m-0"
               type="checkbox"
               id="flexSwitchCheckDefault"
-              @change="changeCB()"
+              @change="changeCb()"
               checked
             />
           </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 //import { useRoute,useRouter } from "vue-router";
 
 @Component({
@@ -74,6 +74,7 @@ export default class SideNav extends Vue {
       routerLinks: undefined,
       sideNav: undefined,
       router: this.$router,
+      route:this.$route,
       routeName: undefined,
     };
   }
@@ -83,30 +84,36 @@ export default class SideNav extends Vue {
     this.doThis();
   }
 
+  @Watch('route')
+  onRouteChanged(newValue:any) {
+    console.log("SideNav route changed")
+  }
+
+
   doThis() {
-      const routerLinks:any = this.$refs.routerLinks;
-      if (this.$route.path != "/marketing" && this.$route.path != "/") {
-        //console.log("if");
-        //console.log(routerLinks.firstChild.classList);
-        routerLinks.firstChild.classList.remove(
-          "router-link-exact-active"
-        );
-      } else {
-        //console.log("else");
-        //console.log(routerLinks.firstChild.classList);
-        routerLinks.firstChild.classList.add("router-link-exact-active");
-      }
+    const routerLinks: any = this.$refs.routerLinks;
+    if (this.$route.path != "/marketing" && this.$route.path != "/") {
+      //console.log("if");
+      //console.log(routerLinks.firstChild.classList);
+      routerLinks.firstChild.classList.remove("router-link-exact-active");
+    } else {
+      //console.log("else");
+      //console.log(routerLinks.firstChild.classList);
+      routerLinks.firstChild.classList.add("router-link-exact-active");
     }
+  }
 
-    navClick() {
-      console.log("clicked");
-    }
+  navClick() {
+    this.doThis();
+    console.log("clicked");
+    return this.allEnable;
+  }
 
-    changeCB() {
-      this.allEnable = !this.allEnable;
-    }
-
-
+  @Emit()
+  changeCb() {
+    this.allEnable = !this.allEnable;
+    return !this.allEnable
+  }
 }
 </script>
 

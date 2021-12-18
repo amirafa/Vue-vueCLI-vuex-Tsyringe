@@ -61,7 +61,7 @@ export default class Marketing extends Vue {
 
   data() {
     return {
-      tabn: 3,
+      tabn: 2,
       loading: false,
       tabData: "",
       pluginsActivate: undefined,

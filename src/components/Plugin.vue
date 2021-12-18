@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue,Watch } from "vue-property-decorator";
 import axios from "axios";
 
 @Component({
@@ -65,6 +65,13 @@ export default class Plugin extends Vue {
       JSON.stringify(Object.assign({}, this.$props.tabData))
     );
     this.checkCb();
+  }
+
+  @Watch('isToggled')
+  onIsToggledChanged(newValue:any) {
+    console.log("plugin watch",newValue);
+    this.checkCb()
+     // ... do whatever you need to do with the newValue here
   }
 
   checkCb() {
