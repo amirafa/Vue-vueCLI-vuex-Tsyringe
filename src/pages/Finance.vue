@@ -24,7 +24,7 @@
           :plugin-status="pluginStatus"
           :is-toggled="isToggled"
           :tab-data="tabData"
-          :tab-number="tabn"
+          :tab-number="tabNum"
         />
       </div>
     </div>
@@ -45,7 +45,7 @@ export default class Marketing extends Vue {
   @Prop() isToggled!: string;
 
   tabData: any;
-  tabn: any;
+  tabNum: any;
   allPlugins: any;
   allPluginsArr: any;
   tabPlugins: any;
@@ -58,10 +58,11 @@ export default class Marketing extends Vue {
   inactiveArr: any;
   tabDatae: any;
   tabPluginsArr: any;
+  tabNames: any;
 
   data() {
     return {
-      tabn: 2,
+      tabNum: 1,
       loading: false,
       tabData: "",
       pluginsActivate: undefined,
@@ -81,11 +82,13 @@ export default class Marketing extends Vue {
       disabledArr: [],
       inactiveArr: [],
       global: new Global(),
+      tabNames : ['marketing','finance','personnel']
     };
   }
 
   mounted() {
     console.log("tab mounted");
+    this.setTabNum();
     this.getData()
       .then((response) => {
         this.tabData = response;
@@ -104,10 +107,18 @@ export default class Marketing extends Vue {
     }
   }
 
+  setTabNum(){
+    console.log("here",this.$route.name);
+    
+    if (this.$route.name == this.tabNames[0]) this.tabNum=1
+    else if (this.$route.name == this.tabNames[1]) this.tabNum=2;
+    else if (this.$route.name == this.tabNames[2]) this.tabNum=3;
+  }
+
   setData() {
     this.allPlugins = this.tabData.data.plugins;
     this.allPluginsArr = Object.values(this.allPlugins);
-    this.setTitle(this.tabn);
+    this.setTitle(this.tabNum);
     this.getStatus();
     this.tabPlugins = this.pluginStatus.active
       .concat(this.pluginStatus.disabled)
@@ -125,7 +136,7 @@ export default class Marketing extends Vue {
   }
 
   getStatus() {
-    this.getStatusArr(this.tabn);
+    this.getStatusArr(this.tabNum);
     //active--------------
     this.activeArr.forEach((element: string) => {
       this.pluginStatus.active.push(element);
@@ -143,7 +154,6 @@ export default class Marketing extends Vue {
   getStatusArr(params: number) {
     if (params == 1) {
       this.activeArr = this.tabData.data.tabdata.tab1.active;
-      console.log(this.activeArr);
       this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
     } else if (params == 2) {
