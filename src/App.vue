@@ -31,7 +31,7 @@ export default class App extends Vue {
   global: Service = new Service();
   isData: boolean = false;
   fdata: any;
-  isToggled: boolean=false;
+  isToggled: boolean=true;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
