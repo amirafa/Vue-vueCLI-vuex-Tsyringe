@@ -39,10 +39,10 @@ export default class Plugin extends Vue {
   @Prop() tabNumber!: any;
 
   status: any;
-  allow: any;
   dataCopy: any;
   card: any;
   checkb: any;
+  allow: any;
 
   data() {
     return {
