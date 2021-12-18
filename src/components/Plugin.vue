@@ -69,7 +69,7 @@ export default class Plugin extends Vue {
 
   @Watch('isToggled')
   onIsToggledChanged(newValue:any) {
-    console.log("plugin watch",newValue);
+    //console.log("plugin watch",newValue);
     this.checkCb()
      // ... do whatever you need to do with the newValue here
   }

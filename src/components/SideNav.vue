@@ -105,7 +105,7 @@ export default class SideNav extends Vue {
 
   navClick() {
     this.doThis();
-    console.log("clicked");
+    //console.log("clicked");
     return this.allEnable;
   }
 

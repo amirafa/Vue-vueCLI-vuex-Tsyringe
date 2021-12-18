@@ -108,8 +108,7 @@ export default class Marketing extends Vue {
   }
 
   setTabNum(){
-    console.log("here",this.$route.name);
-    
+    //console.log("here",this.$route.name);
     if (this.$route.name == this.tabNames[0]) this.tabNum=1
     else if (this.$route.name == this.tabNames[1]) this.tabNum=2;
     else if (this.$route.name == this.tabNames[2]) this.tabNum=3;
@@ -119,11 +118,14 @@ export default class Marketing extends Vue {
     this.allPlugins = this.tabData.data.plugins;
     this.allPluginsArr = Object.values(this.allPlugins);
     this.setTitle(this.tabNum);
+              
     this.getStatus();
+    
     this.tabPlugins = this.pluginStatus.active
       .concat(this.pluginStatus.disabled)
       .concat(this.pluginStatus.inactive);
     //
+    
     this.getTabPlugins();
     //
     this.loading = true;
@@ -162,7 +164,7 @@ export default class Marketing extends Vue {
       this.inactiveArr = this.tabData.data.tabdata.tab2.inactive;
     } else if (params == 3) {
       this.activeArr = this.tabData.data.tabdata.tab3.active;
-      this.disabledArr = this.tabDatae.data.tabdata.tab3.disabled;
+      this.disabledArr = this.tabData.data.tabdata.tab3.disabled;
       this.inactiveArr = this.tabData.data.tabdata.tab3.inactive;
     }
     
