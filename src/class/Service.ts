@@ -1,7 +1,7 @@
 //import { getData } from "./getData.js";
 import axios from "axios";
 
-export class Global {
+export class Service {
   
   data: string;
 

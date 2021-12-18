@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
-import { Global } from "./class/Service";
+import { Service } from "./class/Service";
 
 @Component({
   components: {
@@ -27,7 +27,8 @@ import { Global } from "./class/Service";
   },
 })
 export default class App extends Vue {
-  global: Global = new Global();
+
+  global: Service = new Service();
   isData: boolean = false;
   fdata: any;
   isToggled: boolean=false;

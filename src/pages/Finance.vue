@@ -34,7 +34,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Plugin from "../components/Plugin.vue";
-import { Global } from "../class/Service";
+import { Service } from "../class/Service";
 
 @Component({
   components: {
@@ -81,7 +81,7 @@ export default class Marketing extends Vue {
       activeArr: [],
       disabledArr: [],
       inactiveArr: [],
-      global: new Global(),
+      global: new Service(),
       tabNames : ['marketing','finance','personnel']
     };
   }
