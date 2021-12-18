@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue,Watch } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import axios from "axios";
 
 @Component({
@@ -38,7 +38,7 @@ export default class Plugin extends Vue {
   @Prop() tabData!: any;
   @Prop() tabNumber!: any;
 
-  status: any;
+  status: number = 1;
   dataCopy: any;
   card: any;
   checkb: any;
@@ -58,19 +58,19 @@ export default class Plugin extends Vue {
   mounted() {
     console.log("Plugin mounted");
     this.card = this.$refs.card;
-    this.checkb= this.$refs.checkb;
-    this.allow= this.$refs.allow;
+    this.checkb = this.$refs.checkb;
+    this.allow = this.$refs.allow;
     this.dataCopy = JSON.parse(
       JSON.stringify(Object.assign({}, this.$props.tabData))
     );
     this.checkCb();
   }
 
-  @Watch('isToggled')
-  onIsToggledChanged(newValue:any) {
+  @Watch("isToggled")
+  onIsToggledChanged(newValue: any) {
     //console.log("plugin watch",newValue);
-    this.checkCb()
-     // ... do whatever you need to do with the newValue here
+    this.checkCb();
+    // ... do whatever you need to do with the newValue here
   }
 
   checkCb() {

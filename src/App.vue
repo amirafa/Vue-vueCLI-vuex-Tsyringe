@@ -35,7 +35,7 @@ export default class App extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
-      fdata: "",
+      fdata: undefined,
       isData: undefined,
       isToggled: undefined,
       global: undefined,

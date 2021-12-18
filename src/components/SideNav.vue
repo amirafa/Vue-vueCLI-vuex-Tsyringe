@@ -62,9 +62,8 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 export default class SideNav extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   @Prop() fData!: any;
-  allEnable: boolean=true;
-  cbText: string="";
-
+  allEnable: boolean = true;
+  cbText: string = "";
 
   data() {
     return {
@@ -73,7 +72,7 @@ export default class SideNav extends Vue {
       routerLinks: undefined,
       sideNav: undefined,
       router: this.$router,
-      route:this.$route,
+      route: this.$route,
       routeName: undefined,
     };
   }
@@ -83,11 +82,10 @@ export default class SideNav extends Vue {
     this.doThis();
   }
 
-  @Watch('route')
-  onRouteChanged(newValue:any) {
-    console.log("SideNav route changed")
+  @Watch("route")
+  onRouteChanged(newValue: any) {
+    console.log("SideNav route changed");
   }
-
 
   doThis() {
     const routerLinks: any = this.$refs.routerLinks;
@@ -111,7 +109,7 @@ export default class SideNav extends Vue {
   @Emit()
   changeCb() {
     this.allEnable = !this.allEnable;
-    return this.allEnable
+    return this.allEnable;
   }
 }
 </script>
