@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import axios from "axios";
+import { Service } from "@/class/Service";
 
 @Component({
   components: {},
@@ -185,26 +186,16 @@ export default class Plugin extends Vue {
     console.log("--------------");
   }
 
-  pushData() {
-    console.log("Posted data = ", this.dataCopy);
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    };
-    axios
-      .post(
-        "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130",
-        //"http://localhost:3000/data",
-        this.dataCopy,
-        { headers }
-      )
-      .then(function (response) {
-        console.log("Posted ", response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  async pushData(this: any) {
+    try {
+      //console.log("Posted data = ", typeof(this.dataCopy)); 
+      this.service=new Service()
+      const resp = await this.service.postData(this.dataCopy);
+      //console.log(resp)
+    } catch (err) {
+      console.log("pushData err : ",err);
+      
+    }
   }
 }
 </script>

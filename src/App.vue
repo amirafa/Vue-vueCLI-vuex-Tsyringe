@@ -28,7 +28,7 @@ import { Service } from "./class/Service";
 })
 export default class App extends Vue {
 
-  global: Service = new Service();
+  service: Service = new Service();
   isData: boolean = false;
   fdata: any;
   isToggled: boolean=true;
@@ -38,7 +38,7 @@ export default class App extends Vue {
       fdata: undefined,
       isData: undefined,
       isToggled: undefined,
-      global: undefined,
+      service: undefined,
     };
   }
 
@@ -58,7 +58,7 @@ export default class App extends Vue {
 
   async getData(this: any) {
     try {
-      return await this.global.fetchData(this.global);
+      return await this.service.fetchData();
     } catch (err) {
       return err;
     }
