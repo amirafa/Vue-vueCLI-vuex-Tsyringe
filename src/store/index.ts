@@ -61,6 +61,7 @@ export default new Vuex.Store({
           })
           .catch((err) => {
             //context.commit("SET_LOADING_STATUS", false);
+            console.log("store->postData err",err)
             reject(err);
           });
       });

@@ -61,14 +61,12 @@ export default class Plugin extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
-    this.tabData = this.$store.getters.getData
+    this.tabData = this.$store.getters.getData;
     console.log("Plugin mounted");
     this.card = this.$refs.card;
     this.checkb = this.$refs.checkb;
     this.allow = this.$refs.allow;
-    this.dataCopy = JSON.parse(
-      JSON.stringify(Object.assign({}, this.tabData))
-    );
+    this.dataCopy = JSON.parse(JSON.stringify(Object.assign({}, this.tabData)));
     this.checkCb();
   }
 
@@ -146,10 +144,9 @@ export default class Plugin extends Vue {
   }
 
   setCb() {
-    this.setCbLabel();
-    this.setNewData();
     //this.$store.dispatch("setLoadingStatus",true)
     //console.log(this.$store.getters.getLoadingStatus)
+    this.setNewData();
     this.pushData();
     //console.log(dataCopy.value)
   }
@@ -193,20 +190,17 @@ export default class Plugin extends Vue {
     console.log("--------------");
   }
 
-  async pushData(this: any) {
-    try { 
-      this.$store.dispatch("postData",this.dataCopy).then((response: any) => {
-      console.log("Server Status = ",response.status);
-      //this.$store.dispatch("setLoadingStatus",false)
-      //console.log(this.$store.getters.getLoadingStatus)
-    });
-      // this.service=new Service()
-      // const resp = await this.service.postData(this.dataCopy);
-    } catch (err) {
-      console.log("pushData err : ",err);
-      
-    }
-  }
+  pushData(this: any) {
+      this.$store.dispatch("postData", this.dataCopy).then((response: any) => {
+        console.log("Server Status = ", response.status);
+        this.setCbLabel();
+        //this.$store.dispatch("setLoadingStatus",false)
+        //console.log(this.$store.getters.getLoadingStatus)
+      }).catch((err:any)=>{
+        console.log("Plugin -> pushData" ,err)
+        this.checkb.checked=!this.checkb.checked
+      })
+      }
 }
 </script>
 
