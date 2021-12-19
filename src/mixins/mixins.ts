@@ -49,6 +49,10 @@ export class Tab extends Vue {
         tabNames : ['marketing','finance','personnel']
       };
     }
+
+    created() {
+      console.log("tab created");
+    }
   
     mounted() {
       console.log("tab mounted");

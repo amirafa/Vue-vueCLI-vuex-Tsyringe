@@ -55,6 +55,10 @@ export default class Plugin extends Vue {
     };
   }
 
+  created() {
+    console.log("Plugins created");
+  }
+
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
     this.tabData = this.$store.getters.getData

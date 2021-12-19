@@ -77,6 +77,10 @@ export default class SideNav extends Vue {
     };
   }
 
+  created() {
+    console.log("SideNav created");
+  }
+
   mounted() {
     console.log("SideNav mounted => route is : ", this.$route);
     this.doThis();

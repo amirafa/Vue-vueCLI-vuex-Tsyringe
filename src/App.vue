@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex min-vh-100">
     <SideNav @change-cb="getToggle($event)" />
-    <div v-if="isData" class="d-flex flex-grow-1">
+    <div
+      v-if="isData"
+      class="d-flex flex-grow-1"
+    >
       <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
@@ -41,13 +44,18 @@ export default class App extends Vue {
     };
   }
 
+  created() {
+    console.log("App created");
+    this.isData = this.$store.getters.getLoadingStatus
+  }
+
   mounted() {
     console.log("App mounted");
     console.log("Loading = ", !this.isData);
     this.$store.dispatch("fetchData").then((response) => {
       this.isData = !this.$store.getters.getLoadingStatus;
-      console.log("Fetched Data = ",response);
-      console.log("Loading = ",!this.isData);
+      console.log("Fetched Data = ", response);
+      console.log("Loading = ", !this.isData);
     });
     // this.getData()
     //   .then((respnse) => {
