@@ -57,12 +57,13 @@ export default class Plugin extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
+    this.tabData = this.$store.getters.getData
     console.log("Plugin mounted");
     this.card = this.$refs.card;
     this.checkb = this.$refs.checkb;
     this.allow = this.$refs.allow;
     this.dataCopy = JSON.parse(
-      JSON.stringify(Object.assign({}, this.$props.tabData))
+      JSON.stringify(Object.assign({}, this.tabData))
     );
     this.checkCb();
   }
