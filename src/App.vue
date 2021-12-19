@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex min-vh-100">
     <SideNav @change-cb="getToggle($event)" />
-    <div v-if="showData()" class="d-flex flex-grow-1">
+    <div v-if="isData" class="d-flex flex-grow-1">
       <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
 
@@ -27,33 +27,39 @@ import { Service } from "./class/Service";
   },
 })
 export default class App extends Vue {
-
   service: Service = new Service();
   isData: boolean = false;
   fdata: any;
-  isToggled: boolean=true;
+  isToggled: boolean = true;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       fdata: undefined,
-      isData: undefined,
+      isData: false,
       isToggled: undefined,
       service: undefined,
     };
   }
 
   mounted() {
-    console.log("App mounted");
-    this.getData()
-      .then((respnse) => {
-        this.fdata = respnse;
-        //console.log(this.fdata);
-        this.isData = true;
-        this.showData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log("App mounted", this.isData);
+    this.$store.dispatch('fetchData').then((response)=>{
+      console.log(
+      "this.$store.getters.getLoadingStatus;",
+      this.$store.getters.getLoadingStatus
+    );
+    this.isData = !this.$store.getters.getLoadingStatus;
+    })
+    // this.getData()
+    //   .then((respnse) => {
+    //     this.fdata = respnse;
+    //     //console.log(this.fdata);
+    //     this.isData = true;
+    //     this.showData();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   async getData(this: any) {
@@ -67,10 +73,6 @@ export default class App extends Vue {
   getToggle(toggle: boolean): void {
     console.log("App : toggle change recieve");
     this.isToggled = toggle;
-  }
-
-  showData() {
-    return this.isData;
   }
 }
 // // @Prop()

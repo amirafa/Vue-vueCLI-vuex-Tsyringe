@@ -89,14 +89,16 @@ export default class Marketing extends Vue {
   mounted() {
     console.log("tab mounted");
     this.setTabNum();
-    this.getData()
-      .then((response) => {
-        this.tabData = response;
-        this.setData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.tabData = this.$store.getters.getData
+    this.setData();
+    // this.getData()
+    //   .then((response) => {
+    //     this.tabData = response;
+    //     this.setData();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   async getData(this: any) {
