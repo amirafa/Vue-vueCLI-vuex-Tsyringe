@@ -61,8 +61,8 @@ export default class Plugin extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
-    this.tabData = this.$store.getters.getData;
     console.log("Plugin mounted");
+    this.tabData = this.$store.getters.getData;
     this.card = this.$refs.card;
     this.checkb = this.$refs.checkb;
     this.allow = this.$refs.allow;
@@ -88,6 +88,7 @@ export default class Plugin extends Vue {
 
   checkToggle() {
     this.checkb.disabled = !this.$props.isToggled;
+    //---
     let nodes = this.card.getElementsByTagName("*");
     if (this.$props.isToggled) {
       let nodes = this.card.getElementsByTagName("*");
@@ -125,7 +126,11 @@ export default class Plugin extends Vue {
       if (element == lowCase) {
         //console.log(element, lowCase);
         this.status = 2;
-        this.checkb.disabled = true;
+        let nodes = this.card.getElementsByTagName("*");
+        for (var i = 0; i < nodes.length; i++) {
+          nodes[i].disabled = true;
+          nodes[i].style.userSelect = "none";
+        }
       }
     });
   }
@@ -191,16 +196,19 @@ export default class Plugin extends Vue {
   }
 
   pushData(this: any) {
-      this.$store.dispatch("postData", this.dataCopy).then((response: any) => {
+    this.$store
+      .dispatch("postData", this.dataCopy)
+      .then((response: any) => {
         console.log("Server Status = ", response.status);
         this.setCbLabel();
         //this.$store.dispatch("setLoadingStatus",false)
         //console.log(this.$store.getters.getLoadingStatus)
-      }).catch((err:any)=>{
-        console.log("Plugin -> pushData" ,err)
-        this.checkb.checked=!this.checkb.checked
       })
-      }
+      .catch((err: any) => {
+        console.log("Plugin -> pushData", err);
+        //this.checkb.checked=!this.checkb.checked
+      });
+  }
 }
 </script>
 
