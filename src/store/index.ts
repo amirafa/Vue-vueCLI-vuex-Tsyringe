@@ -33,7 +33,7 @@ export default new Vuex.Store({
     // },
     fetchData(context) {
       return new Promise((resolve, reject) => {
-        console.log("context", context);
+        //console.log("context", context);
         context.commit("SET_LOADING_STATUS", true);
         axios
           //.get(`http://localhost:3000/data`)
@@ -41,7 +41,7 @@ export default new Vuex.Store({
           .then((response: any) => {
             context.commit("SET_LOADING_STATUS", false);
             context.commit("SET_DATA", response.data);
-            resolve(this.state.loadingStatus);
+            resolve(response.data);
           })
           .catch((err) => {
             reject(err);

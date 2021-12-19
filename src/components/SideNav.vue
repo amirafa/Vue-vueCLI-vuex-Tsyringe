@@ -61,7 +61,7 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 })
 export default class SideNav extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  @Prop() fData!: any;
+  //@Prop() fData!: any;
   allEnable: boolean = true;
   cbText: string = "";
 

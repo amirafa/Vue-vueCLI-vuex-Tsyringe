@@ -42,14 +42,13 @@ export default class App extends Vue {
   }
 
   mounted() {
-    console.log("App mounted", this.isData);
-    this.$store.dispatch('fetchData').then((response)=>{
-      console.log(
-      "this.$store.getters.getLoadingStatus;",
-      this.$store.getters.getLoadingStatus
-    );
-    this.isData = !this.$store.getters.getLoadingStatus;
-    })
+    console.log("App mounted");
+    console.log("Loading = ", !this.isData);
+    this.$store.dispatch("fetchData").then((response) => {
+      this.isData = !this.$store.getters.getLoadingStatus;
+      console.log("Fetched Data = ",response);
+      console.log("Loading = ",!this.isData);
+    });
     // this.getData()
     //   .then((respnse) => {
     //     this.fdata = respnse;
