@@ -53,8 +53,9 @@ export default new Vuex.Store({
             { headers }
           )
           .then((response) => {
-            context.commit("SET_LOADING_STATUS", false);
             console.log("Server Response ", response);
+            context.commit("SET_LOADING_STATUS", false);
+            //context.commit("SET_DATA", post);
             resolve(response);
           })
           .catch((err) => {
