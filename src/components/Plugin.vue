@@ -144,6 +144,8 @@ export default class Plugin extends Vue {
   setCb() {
     this.setCbLabel();
     this.setNewData();
+    //this.$store.dispatch("setLoadingStatus",true)
+    //console.log(this.$store.getters.getLoadingStatus)
     this.pushData();
     //console.log(dataCopy.value)
   }
@@ -188,11 +190,14 @@ export default class Plugin extends Vue {
   }
 
   async pushData(this: any) {
-    try {
-      //console.log("Posted data = ", typeof(this.dataCopy)); 
-      this.service=new Service()
-      const resp = await this.service.postData(this.dataCopy);
-      //console.log(resp)
+    try { 
+      this.$store.dispatch("postData",this.dataCopy).then((response: any) => {
+      console.log("Server Status = ",response.status);
+      //this.$store.dispatch("setLoadingStatus",false)
+      //console.log(this.$store.getters.getLoadingStatus)
+    });
+      // this.service=new Service()
+      // const resp = await this.service.postData(this.dataCopy);
     } catch (err) {
       console.log("pushData err : ",err);
       

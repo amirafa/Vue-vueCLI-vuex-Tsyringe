@@ -20,17 +20,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // fetchData(context) {
-    //   console.log("context",context)
-    //   context.commit("SET_LOADING_STATUS", true);
-    //   axios
-    //     //.get(`http://localhost:3000/data`)
-    //     .get(this.state.getUrl)
-    //     .then( (response: any) => {
-    //       context.commit("SET_LOADING_STATUS", false);
-    //       context.commit("SET_DATA", response.data);
-    //     });
-    // },
     fetchData(context) {
       return new Promise((resolve, reject) => {
         //console.log("context", context);
@@ -48,24 +37,8 @@ export default new Vuex.Store({
           });
       });
     },
-    // postData(context, post) {
-    //   context.commit("SET_LOADING_STATUS", true);
-    //   const headers = {
-    //     "Access-Control-Allow-Origin": "*",
-    //     Accept: "application/json, text/plain, */*",
-    //     "Content-Type": "application/json",
-    //   };
-    //   axios
-    //     .post(
-    //       this.state.postUrl, //"http://localhost:3000/data",
-    //       post,
-    //       { headers }
-    //     )
-    //     .then(function (response) {
-    //       console.log("Post Response ", response);
-    //     });
-    // },
     postData(context, post) {
+      //console.log("postData ",post)
       return new Promise((resolve, reject) => {
         context.commit("SET_LOADING_STATUS", true);
         const headers = {
@@ -80,14 +53,18 @@ export default new Vuex.Store({
             { headers }
           )
           .then((response) => {
-            console.log("Post Response ", response);
-            resolve(this.state.loadingStatus);
+            context.commit("SET_LOADING_STATUS", false);
+            console.log("Server Response ", response);
+            resolve(response);
           })
           .catch((err) => {
             reject(err);
           });
       });
     },
+    setLoadingStatus(context,bool){
+      context.commit("SET_LOADING_STATUS", bool);
+    }
   },
   getters: {
     getData(state) {
@@ -99,3 +76,33 @@ export default new Vuex.Store({
   },
   modules: {},
 });
+
+// fetchData(context) {
+//   console.log("context",context)
+//   context.commit("SET_LOADING_STATUS", true);
+//   axios
+//     //.get(`http://localhost:3000/data`)
+//     .get(this.state.getUrl)
+//     .then( (response: any) => {
+//       context.commit("SET_LOADING_STATUS", false);
+//       context.commit("SET_DATA", response.data);
+//     });
+// },
+
+// postData(context, post) {
+//   context.commit("SET_LOADING_STATUS", true);
+//   const headers = {
+//     "Access-Control-Allow-Origin": "*",
+//     Accept: "application/json, text/plain, */*",
+//     "Content-Type": "application/json",
+//   };
+//   axios
+//     .post(
+//       this.state.postUrl, //"http://localhost:3000/data",
+//       post,
+//       { headers }
+//     )
+//     .then(function (response) {
+//       console.log("Post Response ", response);
+//     });
+// },
