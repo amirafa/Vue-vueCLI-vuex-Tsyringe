@@ -33,6 +33,7 @@ export default new Vuex.Store({
             resolve(response.data);
           })
           .catch((err) => {
+            context.commit("SET_LOADING_STATUS", false);
             reject(err);
           });
       });
@@ -40,7 +41,7 @@ export default new Vuex.Store({
     postData(context, post) {
       //console.log("postData ",post)
       return new Promise((resolve, reject) => {
-        context.commit("SET_LOADING_STATUS", true);
+        //context.commit("SET_LOADING_STATUS", true);
         const headers = {
           "Access-Control-Allow-Origin": "*",
           Accept: "application/json, text/plain, */*",
@@ -54,11 +55,12 @@ export default new Vuex.Store({
           )
           .then((response) => {
             console.log("Server Response ", response);
-            context.commit("SET_LOADING_STATUS", false);
-            //context.commit("SET_DATA", post);
+            //context.commit("SET_LOADING_STATUS", false);
+            context.commit("SET_DATA", post); //**beta**
             resolve(response);
           })
           .catch((err) => {
+            //context.commit("SET_LOADING_STATUS", false);
             reject(err);
           });
       });
