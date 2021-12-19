@@ -91,11 +91,7 @@ export default class Plugin extends Vue {
     //---
     let nodes = this.card.getElementsByTagName("*");
     if (this.$props.isToggled) {
-      let nodes = this.card.getElementsByTagName("*");
-      for (var i = 0; i < nodes.length; i++) {
-        nodes[i].disabled = true;
-        nodes[i].style.userSelect = "none";
-      }
+      this.makeDisabled(this.$props.isToggled);
     } else {
       for (var j = 0; j < nodes.length; j++) {
         nodes[j].disabled = false;
@@ -126,13 +122,25 @@ export default class Plugin extends Vue {
       if (element == lowCase) {
         //console.log(element, lowCase);
         this.status = 2;
-        let nodes = this.card.getElementsByTagName("*");
-        for (var i = 0; i < nodes.length; i++) {
-          nodes[i].disabled = true;
-          nodes[i].style.userSelect = "none";
-        }
+        this.makeDisabled(true);
       }
     });
+  }
+
+  makeDisabled(bool: boolean) {
+    if (bool) {
+      let nodes = this.card.getElementsByTagName("*");
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].disabled = true;
+        nodes[i].style.userSelect = "none";
+      }
+    } else {
+      let nodes = this.card.getElementsByTagName("*");
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].disabled = false;
+        nodes[i].style.userSelect = "all";
+      }
+    }
   }
 
   setInactive() {
