@@ -222,7 +222,7 @@ export default class Plugin extends Vue {
     this.service
       .postData(this.dataCopy)
       .then((response: any) => {
-        console.log("Server Status = ", response);
+        console.log("Server Status = ", response.status);
         //this.setCbLabel();
       })
       .catch((err: any) => {

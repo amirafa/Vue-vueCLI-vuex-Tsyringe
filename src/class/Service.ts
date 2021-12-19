@@ -31,9 +31,9 @@ export class Service {
     });
   }
 
-  postData(post: any): Promise<string> {
+  postData(post: any) {
     //store.dispatch("setLoadingStatus",true)
-    return new Promise<string>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const headers = {
         "Access-Control-Allow-Origin": "*",
         Accept: "application/json, text/plain, */*",
@@ -46,10 +46,10 @@ export class Service {
           post,
           { headers }
         )
-        .then(function (response) {
+        .then((response) => {
           console.log("Server Response ", response);
           //store.dispatch("setLoadingStatus",false)
-          resolve(response.data);
+          resolve(response);
         })
         .catch(function (error) {
           store.dispatch("setLoadingStatus",false)
