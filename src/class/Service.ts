@@ -52,6 +52,7 @@ export class Service {
           resolve(response.data);
         })
         .catch(function (error) {
+          store.dispatch("setLoadingStatus",false)
           console.log("postData ",error)
           reject(error);
         });
