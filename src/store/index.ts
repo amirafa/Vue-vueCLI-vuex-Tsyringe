@@ -28,8 +28,8 @@ export default new Vuex.Store({
           //.get(`http://localhost:3000/data`)
           .get(this.state.getUrl)
           .then((response: any) => {
-            context.commit("SET_LOADING_STATUS", false);
             context.commit("SET_DATA", response.data);
+            context.commit("SET_LOADING_STATUS", false);
             resolve(response.data);
           })
           .catch((err) => {

@@ -1,11 +1,8 @@
 <template>
   <div class="d-flex min-vh-100">
     <SideNav @change-cb="getToggle($event)" />
-    <div
-      v-if="isData"
-      class="d-flex flex-grow-1"
-    >
-      <router-view :fdata="fdata" :is-toggled="isToggled"></router-view>
+    <div v-if="!this.$store.getters.getLoadingStatus  && isData" class="d-flex flex-grow-1">
+      <router-view :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
       <div class="row d-flex justify-content-center align-items-center vh-100">
@@ -20,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
 
@@ -46,7 +43,6 @@ export default class App extends Vue {
 
   created() {
     console.log("App created");
-    this.isData = this.$store.getters.getLoadingStatus
   }
 
   mounted() {
@@ -77,11 +73,18 @@ export default class App extends Vue {
     }
   }
 
+// @Watch("isData")
+//   onLoadingChanged(newValue: any) {
+
+//   }
+
+
   getToggle(toggle: boolean): void {
     console.log("App : toggle change recieve");
     this.isToggled = toggle;
   }
 }
+
 // // @Prop()
 // // private msg!: string;
 // msg = "";
