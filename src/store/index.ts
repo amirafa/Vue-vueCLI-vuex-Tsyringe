@@ -20,6 +20,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    setData(context,data){
+      context.commit("SET_DATA", data);
+    },
+    setLoadingStatus(context,bool){
+      context.commit("SET_LOADING_STATUS", bool);
+    },
     fetchData(context) {
       return new Promise((resolve, reject) => {
         //console.log("context", context);
@@ -66,9 +72,6 @@ export default new Vuex.Store({
           });
       });
     },
-    setLoadingStatus(context,bool){
-      context.commit("SET_LOADING_STATUS", bool);
-    }
   },
   getters: {
     getData(state) {

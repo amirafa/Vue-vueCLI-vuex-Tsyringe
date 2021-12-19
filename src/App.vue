@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex min-vh-100">
     <SideNav @change-cb="getToggle($event)" />
-    <div v-if="!this.$store.getters.getLoadingStatus  && isData" class="d-flex flex-grow-1">
+    <div v-if="!this.$store.getters.getLoadingStatus && isData" class="d-flex flex-grow-1">
       <router-view :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
@@ -43,29 +43,30 @@ export default class App extends Vue {
 
   created() {
     console.log("App created");
+    console.log(this.$store.getters.getLoadingStatus);
   }
 
   mounted() {
-    console.log("App mounted");
-    console.log("Loading = ", !this.isData);
-    this.$store.dispatch("fetchData").then((response) => {
-      this.isData = !this.$store.getters.getLoadingStatus;
-      console.log("Fetched Data = ", response);
-      console.log("Loading = ", !this.isData);
-    });
-    // this.getData()
-    //   .then((respnse) => {
-    //     this.fdata = respnse;
-    //     //console.log(this.fdata);
-    //     this.isData = true;
-    //     this.showData();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    // console.log("App mounted");
+    // console.log("Loading = ", !this.isData);
+    // this.$store.dispatch("fetchData").then((response) => {
+    //   this.isData = !this.$store.getters.getLoadingStatus;
+    //   console.log("Fetched Data = ", response);
+    //   console.log("Loading = ", !this.isData);
+    // });
+    this.getData()
+      .then((respnse) => {
+        this.fdata = respnse;
+        //console.log(this.fdata);
+        this.isData = true;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async getData(this: any) {
+    this.service=new Service()
     try {
       return await this.service.fetchData();
     } catch (err) {

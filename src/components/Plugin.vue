@@ -52,6 +52,7 @@ export default class Plugin extends Vue {
       allow: null,
       status: undefined,
       dataCopy: undefined,
+      service: new Service(),
     };
   }
 
@@ -204,17 +205,28 @@ export default class Plugin extends Vue {
   }
 
   pushData(this: any) {
-    this.$store
-      .dispatch("postData", this.dataCopy)
+    // this.$store
+    //   .dispatch("postData", this.dataCopy)
+    //   .then((response: any) => {
+    //     console.log("Server Status = ", response.status);
+    //     this.setCbLabel();
+    //     //this.$store.dispatch("setLoadingStatus",false)
+    //     //console.log(this.$store.getters.getLoadingStatus)
+    //   })
+    //   .catch((err: any) => {
+    //     console.log("Plugin -> pushData", err);
+    //     //this.checkb.checked=!this.checkb.checked
+    //   });
+
+    this.service = new Service();
+    this.service
+      .postData(this.dataCopy)
       .then((response: any) => {
-        console.log("Server Status = ", response.status);
-        this.setCbLabel();
-        //this.$store.dispatch("setLoadingStatus",false)
-        //console.log(this.$store.getters.getLoadingStatus)
+        console.log("Server Status = ", response);
+        //this.setCbLabel();
       })
       .catch((err: any) => {
         console.log("Plugin -> pushData", err);
-        //this.checkb.checked=!this.checkb.checked
       });
   }
 }
