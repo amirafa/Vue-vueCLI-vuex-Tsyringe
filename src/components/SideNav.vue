@@ -91,11 +91,8 @@ export default class SideNav extends Vue {
     this.route = this.$route;
     this.routerLinks = this.$refs.routerLinks;
     console.log("SideNav mounted => route is : ", this.$route);
-    //
     //this.addRouterLink();
-    //
     //this.setLinkTilte();
-    //
     this.doThis();
   }
 
@@ -111,6 +108,15 @@ export default class SideNav extends Vue {
     this.doThis();
   }
 
+  doThis() {
+    const routerLinks: any = this.$refs.routerLinks;
+    if (this.$route.path != "/marketing" && this.$route.path != "/") {
+      routerLinks.firstChild.classList.remove("router-link-exact-active");
+    } else {
+      routerLinks.firstChild.classList.add("router-link-exact-active");
+    }
+  }
+
   // setLinkTilte() {   //مشکل دارد
   //   console.log("here...")
     
@@ -123,15 +129,6 @@ export default class SideNav extends Vue {
   //     element.innerHTML = title;
   //   });
   // }
-
-  doThis() {
-    const routerLinks: any = this.$refs.routerLinks;
-    if (this.$route.path != "/marketing" && this.$route.path != "/") {
-      routerLinks.firstChild.classList.remove("router-link-exact-active");
-    } else {
-      routerLinks.firstChild.classList.add("router-link-exact-active");
-    }
-  }
 
   // addRouterLink() {
   //   let ok = false;
