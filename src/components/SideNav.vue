@@ -1,6 +1,6 @@
 <template>
   <div ref="sideNav" @click="navClick()" class="p-0 m-0 bg-nav">
-    <nav class="bg-nav navbar navbar-light m-0 p-0">
+    <nav class="bg-nav bg-gradient navbar navbar-light m-0 p-0">
       <div
         class="
           container-fluid
@@ -16,14 +16,14 @@
         <a class="navbar-brand m-0 p-5" href="#">Data<strong>Guard</strong></a>
         <!-- Routes Container  -->
         <div ref="routerLinks" class="d-flex flex-column w-100">
-          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/marketing">
+          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/marketing">
             <i class="bi bi-grid-3x3-gap-fill my-auto me-2"></i
             >Marketing</router-link
           >
-          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/finance">
+          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/finance">
             <i class="bi bi-circle-square my-auto me-2"></i>Finance</router-link
           >
-          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
+          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
             <i class="bi bi-check2-square my-auto me-2"></i
             >Personnel</router-link
           >
@@ -64,6 +64,7 @@ export default class SideNav extends Vue {
   //@Prop() fData!: any;
   allEnable: boolean = true;
   cbText: string = "";
+  route: any;
 
   data() {
     return {
@@ -71,8 +72,8 @@ export default class SideNav extends Vue {
       cbText: undefined,
       routerLinks: undefined,
       sideNav: undefined,
-      router: this.$router,
-      route: this.$route,
+      router: undefined,
+      route: undefined,
       routeName: undefined,
     };
   }
@@ -82,6 +83,7 @@ export default class SideNav extends Vue {
   }
 
   mounted() {
+    this.route=this.$route
     console.log("SideNav mounted => route is : ", this.$route);
     this.doThis();
   }
@@ -89,6 +91,7 @@ export default class SideNav extends Vue {
   @Watch("route")
   onRouteChanged(newValue: any) {
     console.log("SideNav route changed");
+    //this.doThis();
   }
 
   doThis() {
@@ -97,10 +100,12 @@ export default class SideNav extends Vue {
       //console.log("if");
       //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.remove("router-link-exact-active");
+      routerLinks.firstChild.classList.remove("shadow-sm");
     } else {
       //console.log("else");
       //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.add("router-link-exact-active");
+      routerLinks.firstChild.classList.add("shadow-sm");
     }
   }
 
@@ -110,7 +115,8 @@ export default class SideNav extends Vue {
     return this.allEnable;
   }
 
-  @Emit()
+
+  @Emit("")
   changeCb() {
     this.allEnable = !this.allEnable;
     return this.allEnable;
