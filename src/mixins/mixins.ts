@@ -23,6 +23,7 @@ export class Tab extends Vue {
   tabDatae: any;
   tabPluginsArr: any;
   tabNames: any;
+  tabsProps: any;
 
   data() {
     return {
@@ -47,6 +48,7 @@ export class Tab extends Vue {
       inactiveArr: [],
       global: new Service(),
       tabNames: ["marketing", "finance", "personnel"],
+      tabsProps: [],
     };
   }
 
@@ -66,41 +68,36 @@ export class Tab extends Vue {
     //console.log("changed",newValue);
   }
 
-  // async getData(this: any) {
-  //   try {
-  //     return await this.global.fetchData(this.global);
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
-
   setTabNum() {
-    if (this.$route.name == this.tabNames[0]) this.tabNum = 1;
-    else if (this.$route.name == this.tabNames[1]) this.tabNum = 2;
-    else if (this.$route.name == this.tabNames[2]) this.tabNum = 3;
+    let tabdata = JSON.parse(JSON.stringify(this.$store.getters.getTabData));
+    //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
+    this.tabsProps = Object.entries(tabdata).map((e) => e);
+
+    this.tabsProps.forEach((e: any, i: any) => {
+      console.log(e[0], e[1]);
+      if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
+    });
+    console.log(this.tabNum);
   }
 
   setData() {
-    this.allPlugins = this.tabData.data.plugins;
+    //this.allPlugins = this.tabData.data.plugins;
+    this.allPlugins = this.$store.getters.getPlugins;
     this.allPluginsArr = Object.values(this.allPlugins);
     this.setTitle(this.tabNum);
-
+    //---
     this.getStatus();
-
+    //---
     this.tabPlugins = this.pluginStatus.active
       .concat(this.pluginStatus.disabled)
       .concat(this.pluginStatus.inactive);
     //
-
     this.getTabPlugins();
     //
-    //this.loading = true;
   }
 
   setTitle(params: any) {
-    if (params == 1) this.title = this.tabData.data.tabdata.tab1.title;
-    else if (params == 2) this.title = this.tabData.data.tabdata.tab2.title;
-    else if (params == 3) this.title = this.tabData.data.tabdata.tab3.title;
+    this.title = this.tabsProps[params][1].title;
   }
 
   getStatus() {
@@ -120,22 +117,19 @@ export class Tab extends Vue {
   }
 
   getStatusArr(params: number) {
-    if (params == 1) {
-      this.activeArr = this.tabData.data.tabdata.tab1.active;
-      this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
-      this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
-    } else if (params == 2) {
-      this.activeArr = this.tabData.data.tabdata.tab2.active;
-      this.disabledArr = this.tabData.data.tabdata.tab2.disabled;
-      this.inactiveArr = this.tabData.data.tabdata.tab2.inactive;
-    } else if (params == 3) {
-      this.activeArr = this.tabData.data.tabdata.tab3.active;
-      this.disabledArr = this.tabData.data.tabdata.tab3.disabled;
-      this.inactiveArr = this.tabData.data.tabdata.tab3.inactive;
-    }
+    console.log(this.tabsProps[params][0]);
+    this.activeArr =
+      this.tabData.data.tabdata[this.tabsProps[params][0]].active;
+    this.disabledArr =
+      this.tabData.data.tabdata[this.tabsProps[params][0]].disabled;
+    this.inactiveArr =
+      this.tabData.data.tabdata[this.tabsProps[params][0]].inactive;
   }
 
   getTabPlugins() {
+    console.log("1",this.allPluginsArr);
+    console.log("2",this.tabPlugins);
+    
     this.allPluginsArr.forEach((a: any) => {
       this.tabPlugins.forEach((b: any) => {
         let noSpace = a.title.replace(/\s/g, "");

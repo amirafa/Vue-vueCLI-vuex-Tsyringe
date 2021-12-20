@@ -91,14 +91,7 @@ export default class Plugin extends Vue {
     this.checkb.disabled = !this.$props.isToggled;
     //---
     let nodes = this.card.getElementsByTagName("*");
-    if (this.$props.isToggled) {
-      this.makeDisabled(this.$props.isToggled);
-    } else {
-      for (var j = 0; j < nodes.length; j++) {
-        nodes[j].disabled = false;
-        nodes[j].style.userSelect = "all";
-      }
-    }
+    this.makeDisabled(this.$props.isToggled);
   }
 
   setActive() {
@@ -128,6 +121,19 @@ export default class Plugin extends Vue {
     });
   }
 
+  setInactive() {
+    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
+    let lowCase = noSpace.toLowerCase();
+    //console.log(props.pluginStatus.active,lowCase)
+    this.$props.pluginStatus.inactive.forEach((element: any) => {
+      if (element == lowCase) {
+        //console.log(element, lowCase);
+        this.status = 3;
+        this.checkb.checked = false;
+      }
+    });
+  }
+
   makeDisabled(bool: boolean) {
     if (bool) {
       let nodes = this.card.getElementsByTagName("*");
@@ -142,19 +148,6 @@ export default class Plugin extends Vue {
         nodes[i].style.userSelect = "all";
       }
     }
-  }
-
-  setInactive() {
-    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
-    let lowCase = noSpace.toLowerCase();
-    //console.log(props.pluginStatus.active,lowCase)
-    this.$props.pluginStatus.inactive.forEach((element: any) => {
-      if (element == lowCase) {
-        //console.log(element, lowCase);
-        this.status = 3;
-        this.checkb.checked = false;
-      }
-    });
   }
 
   setCb() {
@@ -217,7 +210,6 @@ export default class Plugin extends Vue {
     //     console.log("Plugin -> pushData", err);
     //     //this.checkb.checked=!this.checkb.checked
     //   });
-
     this.service = new Service();
     this.service
       .postData(this.dataCopy)
