@@ -47,13 +47,6 @@ export default class App extends Vue {
   }
 
   mounted() {
-    // console.log("App mounted");
-    // console.log("Loading = ", !this.isData);
-    // this.$store.dispatch("fetchData").then((response) => {
-    //   this.isData = !this.$store.getters.getLoadingStatus;
-    //   console.log("Fetched Data = ", response);
-    //   console.log("Loading = ", !this.isData);
-    // });
     this.getData()
       .then((respnse) => {
         this.fdata = respnse;
@@ -63,6 +56,13 @@ export default class App extends Vue {
       .catch((err) => {
         console.log(err);
       });
+    // console.log("App mounted");
+    // console.log("Loading = ", !this.isData);
+    // this.$store.dispatch("fetchData").then((response) => {
+    //   this.isData = !this.$store.getters.getLoadingStatus;
+    //   console.log("Fetched Data = ", response);
+    //   console.log("Loading = ", !this.isData);
+    // });
   }
 
   async getData(this: any) {

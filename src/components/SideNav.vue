@@ -18,15 +18,13 @@
         <div ref="routerLinks" class="d-flex flex-column w-100">
           <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/marketing">
             <i class="bi bi-grid-3x3-gap-fill my-auto me-2"></i
-            >Marketing</router-link
-          >
+          >Marketing</router-link>
           <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/finance">
-            <i class="bi bi-circle-square my-auto me-2"></i>Finance</router-link
-          >
-          <router-link @click="addShadow()" class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
+            <i class="bi bi-circle-square my-auto me-2"></i
+          >Finance</router-link>
+          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
             <i class="bi bi-check2-square my-auto me-2"></i
-            >Personnel</router-link
-          >
+          >Personnel</router-link>
         </div>
         <!-- --------------- -->
         <div class="bg-nav d-flex mt-auto mx-auto mb-2 position-fixed bottom-0">
@@ -54,20 +52,25 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
+import router from "@/router";
 //import { useRoute,useRouter } from "vue-router";
 
 @Component({
   components: {},
 })
 export default class SideNav extends Vue {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   //@Prop() fData!: any;
+  tabData: any;
   allEnable: boolean = true;
   cbText: string = "";
   route: any;
+  routes: any;
+  tabsProps: any;
+  routerLinks: any;
 
   data() {
     return {
+      tabData: undefined,
       allEnable: undefined,
       cbText: undefined,
       routerLinks: undefined,
@@ -75,6 +78,8 @@ export default class SideNav extends Vue {
       router: undefined,
       route: undefined,
       routeName: undefined,
+      routes: undefined,
+      tabsProps: undefined,
     };
   }
 
@@ -83,38 +88,68 @@ export default class SideNav extends Vue {
   }
 
   mounted() {
-    this.route=this.$route
+    this.route = this.$route;
+    this.routerLinks = this.$refs.routerLinks;
     console.log("SideNav mounted => route is : ", this.$route);
+    //
+    //this.addRouterLink();
+    //
+    //this.setLinkTilte();
+    //
     this.doThis();
   }
 
   @Watch("route")
   onRouteChanged(newValue: any) {
-    console.log("SideNav route changed");
-    //this.doThis();
+    //console.log("SideNav route changed");
+    this.doThis();
+  }
+
+  setLinkTilte() {
+    console.log("here...")
+    this.tabData = JSON.parse(JSON.stringify(this.$store.getters.getTabData));
+    console.log("here1...",this.$store.getters.getTabData)
+    this.tabsProps = Object.entries(this.tabData).map((e) => e);
+    console.log("here2...",this.tabsProps)
+    this.routerLinks.childNodes.forEach((element: any, index: number) => {
+      //console.log(this.tabsProps[index]);
+      let title: string = this.tabsProps[index][1].title;
+      element.innerHTML = title;
+    });
   }
 
   doThis() {
     const routerLinks: any = this.$refs.routerLinks;
     if (this.$route.path != "/marketing" && this.$route.path != "/") {
-      //console.log("if");
-      //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.remove("router-link-exact-active");
-      //routerLinks.firstChild.classList.remove("shadow-sm");
     } else {
-      //console.log("else");
-      //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.add("router-link-exact-active");
-      //routerLinks.firstChild.classList.add("shadow-sm");
     }
   }
+
+  // addRouterLink() {
+  //   let ok = false;
+  //   router.getRoutes().forEach((element: any, index: any) => {
+  //     //console.log("now", this.tabsProps[index][1].title, index);
+  //     if (ok) {
+  //       let linkNode: string = `<a
+  //       class="nav-link ps-5 px-0 py-3 w-100
+  //       router-link-exact-active router-link-active"
+  //       onclick='onClick()'
+  //       >
+  //       ${this.tabsProps[index - 1][1].title}
+  //       </a>`;
+  //       this.routerLinks.innerHTML = this.routerLinks.innerHTML + linkNode;
+  //     }
+  //     ok = true;
+  //   });
+  // }
 
   navClick() {
     this.doThis();
     //console.log("clicked");
     return this.allEnable;
   }
-
 
   @Emit("")
   changeCb() {

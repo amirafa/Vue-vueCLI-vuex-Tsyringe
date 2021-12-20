@@ -74,10 +74,10 @@ export class Tab extends Vue {
     this.tabsProps = Object.entries(tabdata).map((e) => e);
 
     this.tabsProps.forEach((e: any, i: any) => {
-      console.log(e[0], e[1]);
+      //console.log(e[0], e[1]);
       if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
     });
-    console.log(this.tabNum);
+    //console.log(this.tabNum);
   }
 
   setData() {
@@ -117,7 +117,7 @@ export class Tab extends Vue {
   }
 
   getStatusArr(params: number) {
-    console.log(this.tabsProps[params][0]);
+    //console.log(this.tabsProps[params][0]);
     this.activeArr =
       this.tabData.data.tabdata[this.tabsProps[params][0]].active;
     this.disabledArr =
@@ -126,10 +126,7 @@ export class Tab extends Vue {
       this.tabData.data.tabdata[this.tabsProps[params][0]].inactive;
   }
 
-  getTabPlugins() {
-    console.log("1",this.allPluginsArr);
-    console.log("2",this.tabPlugins);
-    
+  getTabPlugins() {    
     this.allPluginsArr.forEach((a: any) => {
       this.tabPlugins.forEach((b: any) => {
         let noSpace = a.title.replace(/\s/g, "");
