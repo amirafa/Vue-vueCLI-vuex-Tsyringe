@@ -16,14 +16,14 @@
         <a class="navbar-brand m-0 p-5" href="#">Data<strong>Guard</strong></a>
         <!-- Routes Container  -->
         <div ref="routerLinks" class="d-flex flex-column w-100">
-          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/marketing">
+          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/marketing">
             <i class="bi bi-grid-3x3-gap-fill my-auto me-2"></i
             >Marketing</router-link
           >
-          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/finance">
+          <router-link class="nav-link ps-5 px-0 py-3 w-100" to="/finance">
             <i class="bi bi-circle-square my-auto me-2"></i>Finance</router-link
           >
-          <router-link @click="addShadow(this)" class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
+          <router-link @click="addShadow()" class="nav-link ps-5 px-0 py-3 w-100" to="/personnel">
             <i class="bi bi-check2-square my-auto me-2"></i
             >Personnel</router-link
           >
@@ -100,12 +100,12 @@ export default class SideNav extends Vue {
       //console.log("if");
       //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.remove("router-link-exact-active");
-      routerLinks.firstChild.classList.remove("shadow-sm");
+      //routerLinks.firstChild.classList.remove("shadow-sm");
     } else {
       //console.log("else");
       //console.log(routerLinks.firstChild.classList);
       routerLinks.firstChild.classList.add("router-link-exact-active");
-      routerLinks.firstChild.classList.add("shadow-sm");
+      //routerLinks.firstChild.classList.add("shadow-sm");
     }
   }
 
