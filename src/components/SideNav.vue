@@ -105,18 +105,24 @@ export default class SideNav extends Vue {
     this.doThis();
   }
 
-  setLinkTilte() {
-    console.log("here...")
-    this.tabData = JSON.parse(JSON.stringify(this.$store.getters.getTabData));
-    console.log("here1...",this.$store.getters.getTabData)
-    this.tabsProps = Object.entries(this.tabData).map((e) => e);
-    console.log("here2...",this.tabsProps)
-    this.routerLinks.childNodes.forEach((element: any, index: number) => {
-      //console.log(this.tabsProps[index]);
-      let title: string = this.tabsProps[index][1].title;
-      element.innerHTML = title;
-    });
+  @Watch("tabData")
+  ontabDataChange(newValue: any) {
+    //console.log("SideNav route changed");
+    this.doThis();
   }
+
+  // setLinkTilte() {   //مشکل دارد
+  //   console.log("here...")
+    
+  //   console.log("here1...",this.$store.getters.getTabData)
+  //   this.tabsProps = Object.entries(this.tabData).map((e) => e);
+  //   console.log("here2...",this.tabsProps)
+  //   this.routerLinks.childNodes.forEach((element: any, index: number) => {
+  //     //console.log(this.tabsProps[index]);
+  //     let title: string = this.tabsProps[index][1].title;
+  //     element.innerHTML = title;
+  //   });
+  // }
 
   doThis() {
     const routerLinks: any = this.$refs.routerLinks;
