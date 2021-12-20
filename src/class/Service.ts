@@ -8,10 +8,6 @@ export class Service {
     this.data = "";
   }
 
-  showData(){
-    return store.getters.getLoadingStatus
-  }
-
   fetchData(): Promise<string> {
     store.dispatch("setLoadingStatus",true)
     return new Promise<string>((resolve, reject) => {
