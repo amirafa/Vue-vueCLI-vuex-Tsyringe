@@ -1,20 +1,26 @@
 import axios from "axios";
 import store from '@/store/index'
+import { Myjson } from "@/interface/interface";
 
 export class Service {
   data: string;
+  getUrl:string;
+  postUrl:string;
 
   constructor() {
     this.data = "";
+    this.getUrl="https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130"
+    this.postUrl="https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130"
   }
 
-  fetchData(): Promise<string> {
+  fetchData(): Promise<Myjson> {
     store.dispatch("setLoadingStatus",true)
-    return new Promise<string>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       axios
         //.get(`http://localhost:3000/data`)
-        .get(`https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130`)
+        .get(this.getUrl)
         .then(function (response) {
+          console.log(response);
           console.log("Get : ", response.data);
           store.dispatch('setData',response.data)
           store.dispatch("setLoadingStatus",false)
@@ -27,9 +33,9 @@ export class Service {
     });
   }
 
-  postData(post: any) {
+  postData(post: Myjson):Promise<string>  {
     //store.dispatch("setLoadingStatus",true)
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve:any, reject:any) => {
       const headers = {
         "Access-Control-Allow-Origin": "*",
         Accept: "application/json, text/plain, */*",
@@ -37,7 +43,7 @@ export class Service {
       };
       axios
         .post(
-          "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130",
+          this.postUrl,
           //"http://localhost:3000/data",
           post,
           { headers }

@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex min-vh-100">
     <SideNav @change-cb="getToggle($event)" />
-    <div v-if="!this.$store.getters.getLoadingStatus && isData" class="d-flex flex-grow-1">
+    <div
+      v-if="!this.$store.getters.getLoadingStatus && isData"
+      class="d-flex flex-grow-1"
+    >
       <router-view :is-toggled="isToggled"></router-view>
     </div>
     <div v-else class="container">
@@ -20,6 +23,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
+import { Myjson,DefaulMyjson } from "@/interface/interface";
 
 @Component({
   components: {
@@ -29,13 +33,13 @@ import { Service } from "./class/Service";
 export default class App extends Vue {
   service: Service = new Service();
   isData: boolean = false;
-  fdata: any;
+  fdata: Myjson = DefaulMyjson
   isToggled: boolean = true;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   data() {
     return {
       fdata: undefined,
-      isData: false,
+      isData: undefined,
       isToggled: undefined,
       service: undefined,
     };
@@ -48,12 +52,12 @@ export default class App extends Vue {
 
   mounted() {
     this.getData()
-      .then((respnse) => {
+      .then((respnse: Myjson) => {
         this.fdata = respnse;
         //console.log(this.fdata);
         this.isData = true;
       })
-      .catch((err) => {
+      .catch((err:any) => {
         console.log(err);
       });
     // console.log("App mounted");
@@ -65,20 +69,19 @@ export default class App extends Vue {
     // });
   }
 
-  async getData(this: any) {
-    this.service=new Service()
+  async getData():Promise<Myjson> {
+    this.service = new Service();
     try {
       return await this.service.fetchData();
-    } catch (err) {
+    } catch (err:any) {
       return err;
     }
   }
 
-// @Watch("isData")
-//   onLoadingChanged(newValue: any) {
+  // @Watch("isData")
+  //   onLoadingChanged(newValue: any) {
 
-//   }
-
+  //   }
 
   getToggle(toggle: boolean): void {
     console.log("App : toggle change recieve");

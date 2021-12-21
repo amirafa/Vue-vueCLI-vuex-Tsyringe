@@ -1,42 +1,43 @@
 import Vue from "vue";
 import Vuex from "vuex";
 //import axios from "axios";
+import { Myjson,DefaulMyjson } from "@/interface/interface";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loadingStatus: false,
-    data: {},
-    getUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130", //.get(`http://localhost:3000/data`)
-    postUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130",
+    loadingStatus: false as boolean,
+    data: DefaulMyjson as Myjson ,
+    getUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string, //.get(`http://localhost:3000/data`)
+    postUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string,
   },
   mutations: {
-    SET_LOADING_STATUS(state, status) {
+    SET_LOADING_STATUS(state, status:boolean) {
       state.loadingStatus = status;
     },
-    SET_DATA(state, data) {
+    SET_DATA(state, data:Myjson) {
       state.data = data;
     },
   },
   //-------------------------------
   actions: {
-    setData(context,data){
+    setData(context,data:Myjson){
       context.commit("SET_DATA", data);
     },
-    setLoadingStatus(context,bool){
+    setLoadingStatus(context,bool:boolean){
       context.commit("SET_LOADING_STATUS", bool);
     },
   },
   //-------------------------------
   getters: {
-    getData(state) {
+    getData(state):Myjson {
       return state.data;
     },
-    getLoadingStatus(state) {
+    getLoadingStatus(state):boolean {
       return state.loadingStatus;
     },
-    getTabs(state) {
+    getTabs(state):Array<string>{
       return state.data.data.tabs;
     },
     getPlugins(state){
