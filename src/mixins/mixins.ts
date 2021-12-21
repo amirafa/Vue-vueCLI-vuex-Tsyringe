@@ -2,14 +2,19 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator";
 import { Service } from "../class/Service";
-import { Myjson, DefaultMyjson } from "@/interface/interface";
+import { Myjson, Tabdata, Tab } from "@/interface/interface";
 
 // You can declare mixins as the same style as components.
+interface tabProps {
+  tab: string;
+  tabdata: Tabdata;
+}
+
 @Component
-export class Tab extends Vue {
+export class Mix extends Vue {
   @Prop() isToggled!: string;
 
-  tabData: Myjson = DefaultMyjson;
+  tabData!: Myjson;
   tabNum: number = 0;
   allPlugins: any;
   allPluginsArr: any;
@@ -23,7 +28,7 @@ export class Tab extends Vue {
   inactiveArr: Array<string> = [];
   tabPluginsArr: Array<string> = [];
   tabNames: Array<string> = [];
-  tabsProps: any;
+  tabsProps!: Array<[string, Tab]>;
 
   data() {
     return {
@@ -37,7 +42,7 @@ export class Tab extends Vue {
       allPluginsArr: [] as Array<string>,
       tabPlugins: undefined,
       tabPluginsArr: [] as Array<string>,
-      title: undefined,
+      title: "" as string,
       pluginStatus: {
         active: [] as Array<string>,
         disabled: [] as Array<string>,
@@ -46,9 +51,9 @@ export class Tab extends Vue {
       activeArr: [] as Array<string>,
       disabledArr: [] as Array<string>,
       inactiveArr: [] as Array<string>,
-      global: new Service(),
-      tabNames: ["marketing", "finance", "personnel"],
-      tabsProps: undefined,
+      global: new Service() as Service,
+      tabNames: ["marketing", "finance", "personnel"] as Array<string>,
+      tabsProps: [] as Array<[string, Tab]>,
     };
   }
 
@@ -69,12 +74,14 @@ export class Tab extends Vue {
   }
 
   setTabNum() {
-    let tabdata = JSON.parse(JSON.stringify(this.$store.getters.getTabData));
+    let tabdata: Tabdata = JSON.parse(
+      JSON.stringify(this.$store.getters.getTabData)
+    );
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
-    this.tabsProps = Object.entries(tabdata).map((e) => e);
+    this.tabsProps = Object.entries(tabdata).map((e: any) => e);
     //console.log(this.tabsProps);
 
-    this.tabsProps.forEach((e: any, i: any) => {
+    this.tabsProps.forEach((e: [string, Tab], i: number) => {
       //console.log(e[0], e[1]);
       if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
     });
@@ -116,15 +123,16 @@ export class Tab extends Vue {
       this.pluginStatus.inactive.push(element);
     });
   }
-
-  getStatusArr(params: number) {
-    //console.log(this.tabsProps[params][0]);
+ 
+  getStatusArr(params:any) {
+    var tabname = this.tabsProps[params][0];
+    //ignor error
     this.activeArr =
-      this.tabData.data.tabdata[this.tabsProps[params][0]].active;
+      this.tabData.data.tabdata[tabname].active;
     this.disabledArr =
-      this.tabData.data.tabdata[this.tabsProps[params][0]].disabled;
+      this.tabData.data.tabdata[tabname].disabled;
     this.inactiveArr =
-      this.tabData.data.tabdata[this.tabsProps[params][0]].inactive;
+      this.tabData.data.tabdata[tabname].inactive;
   }
 
   getTabPlugins() {

@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 //import axios from "axios";
-import { Myjson,DefaultMyjson } from "@/interface/interface";
+import { Myjson } from "@/interface/interface";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     loadingStatus: false as boolean,
-    data: DefaultMyjson as Myjson ,
+    data: {} as Myjson ,
     getUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string, //.get(`http://localhost:3000/data`)
     postUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string,
   },

@@ -35,15 +35,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Plugin from "../components/Plugin.vue";
 import { Service } from "../class/Service";
-import { Tab } from '@/mixins/mixins'
+import { Mix } from "@/mixins/mixins";
 
 @Component({
   components: {
     Plugin,
   },
 })
-export default class Finance extends Tab{
-}
+export default class Finance extends Mix {}
 </script>
 
 <style>

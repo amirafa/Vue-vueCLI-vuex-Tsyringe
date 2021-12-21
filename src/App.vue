@@ -23,7 +23,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
-import { Myjson,DefaultMyjson } from "@/interface/interface";
+import { Myjson } from "@/interface/interface";
 
 @Component({
   components: {
@@ -33,7 +33,7 @@ import { Myjson,DefaultMyjson } from "@/interface/interface";
 export default class App extends Vue {
   service: Service = new Service();
   isData: boolean = false;
-  fdata: Myjson = DefaultMyjson
+  fdata!: Myjson;
   isToggled: boolean = true;
 
   data() {
@@ -57,7 +57,7 @@ export default class App extends Vue {
         //console.log(this.fdata);
         this.isData = true;
       })
-      .catch((err:any) => {
+      .catch((err: any) => {
         console.log(err);
       });
     // console.log("App mounted");
@@ -69,11 +69,11 @@ export default class App extends Vue {
     // });
   }
 
-  async getData():Promise<Myjson> {
+  async getData(): Promise<Myjson> {
     this.service = new Service();
     try {
       return await this.service.fetchData();
-    } catch (err:any) {
+    } catch (err: any) {
       return err;
     }
   }
