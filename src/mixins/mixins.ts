@@ -2,27 +2,26 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator";
 import { Service } from "../class/Service";
-import { Myjson, Tabdata, Tab } from "@/interface/interface";
+import { Myjson, Tabdata, Plugin, Tab } from "@/interface/interface";
 
 // You can declare mixins as the same style as components.
-interface tabProps {
-  tab: string;
-  tabdata: Tabdata;
-}
 
 @Component
 export class Mix extends Vue {
   @Prop() isToggled!: string;
 
   tabData!: Myjson;
-  tabNum: number = 0;
-  allPlugins: any;
-  allPluginsArr: any;
-  tabPlugins: any;
+  tabNum = 0;
+  allPlugins!: Plugin;
+  allPluginsArr!: Array<Plugin>;
+  tabPlugins!: {
+    active: Array<string>;
+    disabled: Array<string>;
+    inactive: Array<string>;
+  };
   pluginStatus: any;
-  loading: boolean = true;
-  global: any;
-  title: string = "";
+  loading = true;
+  title = "";
   activeArr: Array<string> = [];
   disabledArr: Array<string> = [];
   inactiveArr: Array<string> = [];
@@ -30,6 +29,7 @@ export class Mix extends Vue {
   tabNames: Array<string> = [];
   tabsProps!: Array<[string, Tab]>;
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       tabNum: undefined,
@@ -51,30 +51,29 @@ export class Mix extends Vue {
       activeArr: [] as Array<string>,
       disabledArr: [] as Array<string>,
       inactiveArr: [] as Array<string>,
-      global: new Service() as Service,
       tabNames: ["marketing", "finance", "personnel"] as Array<string>,
       tabsProps: [] as Array<[string, Tab]>,
     };
   }
 
-  created() {
+  created(): void {
     console.log("tab created");
   }
 
-  mounted() {
+  mounted(): void {
     console.log("tab mounted");
     this.tabData = this.$store.getters.getData;
     this.setTabNum();
     this.setData();
   }
 
-  @Watch("loading")
-  onLoadingChanged(newValue: boolean) {
-    //console.log("changed",newValue);
-  }
+  // @Watch("loading")
+  // onLoadingChanged(newValue: boolean) {
+  //   //console.log("changed",newValue);
+  // }
 
-  setTabNum() {
-    let tabdata: Tabdata = JSON.parse(
+  setTabNum(): void {
+    const tabdata: Tabdata = JSON.parse(
       JSON.stringify(this.$store.getters.getTabData)
     );
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
@@ -87,7 +86,7 @@ export class Mix extends Vue {
     });
   }
 
-  setData() {
+  setData(): void {
     //this.allPlugins = this.tabData.data.plugins;
     this.allPlugins = this.$store.getters.getPlugins;
     this.allPluginsArr = Object.values(this.allPlugins);
@@ -103,11 +102,11 @@ export class Mix extends Vue {
     //
   }
 
-  setTitle(params: number) {
+  setTitle(params: number): void {
     this.title = this.tabsProps[params][1].title;
   }
 
-  getStatus() {
+  getStatus(): void {
     this.getStatusArr(this.tabNum);
     //active--------------
     this.activeArr.forEach((element: string) => {
@@ -123,19 +122,19 @@ export class Mix extends Vue {
     });
   }
 
-  getStatusArr(params: any) {
-    var tabname = this.tabsProps[params][0];
+  getStatusArr(params: number): void {
+    const tabname = this.tabsProps[params][0];
     //ignor error
     this.activeArr = this.tabData.data.tabdata[tabname].active;
     this.disabledArr = this.tabData.data.tabdata[tabname].disabled;
     this.inactiveArr = this.tabData.data.tabdata[tabname].inactive;
   }
 
-  getTabPlugins() {
-    this.allPluginsArr.forEach((a: any) => {
+  getTabPlugins(): void {
+    this.allPluginsArr.forEach((a: Plugin) => {
       this.tabPlugins.forEach((b: string) => {
-        let noSpace = a.title.replace(/\s/g, "");
-        let lowCase = noSpace.toLowerCase();
+        const noSpace = a.title.replace(/\s/g, "");
+        const lowCase = noSpace.toLowerCase();
         if (b == lowCase) {
           this.tabPluginsArr.push(a);
         }

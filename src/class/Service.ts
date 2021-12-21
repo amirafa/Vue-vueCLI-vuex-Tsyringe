@@ -15,7 +15,7 @@ export class Service {
 
   fetchData(): Promise<Myjson> {
     store.dispatch("setLoadingStatus",true)
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve:any, reject:any) => {
       axios
         //.get(`http://localhost:3000/data`)
         .get(this.getUrl)

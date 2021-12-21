@@ -32,9 +32,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Plugin from "../components/Plugin.vue";
-import { Service } from "../class/Service";
 import { Mix } from "@/mixins/mixins";
 
 @Component({

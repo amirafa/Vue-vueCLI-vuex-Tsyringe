@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue} from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
 import { Myjson } from "@/interface/interface";
@@ -32,10 +32,11 @@ import { Myjson } from "@/interface/interface";
 })
 export default class App extends Vue {
   service: Service = new Service();
-  isData: boolean = false;
+  isData!: boolean ;
   fdata!: Myjson;
-  isToggled: boolean = true;
+  isToggled!: boolean;
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       fdata: undefined,
@@ -45,19 +46,19 @@ export default class App extends Vue {
     };
   }
 
-  created() {
+  created():void {
     console.log("App created");
     console.log(this.$store.getters.getLoadingStatus);
   }
 
-  mounted() {
+  mounted():void {
     this.getData()
       .then((respnse: Myjson) => {
         this.fdata = respnse;
         //console.log(this.fdata);
         this.isData = true;
       })
-      .catch((err: any) => {
+      .catch((err: unknown) => {
         console.log(err);
       });
     // console.log("App mounted");

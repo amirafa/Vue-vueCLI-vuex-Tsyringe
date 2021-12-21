@@ -61,7 +61,7 @@ import { Myjson } from "@/interface/interface";
 })
 export default class SideNav extends Vue {
   //@Prop() fData!: any;
-  tabData: any;
+  tabData!: Myjson;
   allEnable!: boolean ;
   cbText!: string ;
   route: any;
