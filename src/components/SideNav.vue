@@ -54,6 +54,7 @@
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import router from "@/router";
 //import { useRoute,useRouter } from "vue-router";
+import { Myjson } from "@/interface/interface";
 
 @Component({
   components: {},
@@ -61,8 +62,8 @@ import router from "@/router";
 export default class SideNav extends Vue {
   //@Prop() fData!: any;
   tabData: any;
-  allEnable: boolean = true;
-  cbText: string = "";
+  allEnable!: boolean ;
+  cbText!: string ;
   route: any;
   routes: any;
   tabsProps: any;
