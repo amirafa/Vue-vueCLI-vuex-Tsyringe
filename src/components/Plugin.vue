@@ -27,6 +27,7 @@
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import axios from "axios";
 import { Service } from "@/class/Service";
+import { Myjson } from "@/interface/interface";
 
 @Component({
   components: {},
@@ -39,11 +40,12 @@ export default class Plugin extends Vue {
   @Prop() tabData!: any;
   @Prop() tabNumber!: any;
 
-  status: number = 1;
-  dataCopy: any;
+  status!: number;
+  dataCopy!: Myjson;
   card: any;
   checkb: any;
   allow: any;
+  service!: Service;
 
   data() {
     return {
@@ -80,9 +82,7 @@ export default class Plugin extends Vue {
 
   checkCb() {
     this.checkToggle();
-    this.setActive();
-    this.setDisabled();
-    this.setInactive();
+    this.setPreloadCheckbox();
     this.setCbLabel();
     //console.log(status.value)
   }
@@ -94,9 +94,15 @@ export default class Plugin extends Vue {
     this.makeDisabled(this.$props.isToggled);
   }
 
-  setActive() {
-    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
-    let lowCase = noSpace.toLowerCase();
+  setPreloadCheckbox() {
+    let noSpace: string = this.$props.plugin.title.replace(/\s/g, "");
+    let lowCase: string = noSpace.toLowerCase();
+    this.setActive(noSpace, lowCase);
+    this.setDisabled(noSpace, lowCase);
+    this.setInactive(noSpace, lowCase);
+  }
+
+  setActive(noSpace: string, lowCase: string) {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.active.forEach((element: any) => {
       if (element == lowCase) {
@@ -108,9 +114,7 @@ export default class Plugin extends Vue {
     });
   }
 
-  setDisabled() {
-    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
-    let lowCase = noSpace.toLowerCase();
+  setDisabled(noSpace: string, lowCase: string) {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.disabled.forEach((element: any) => {
       if (element == lowCase) {
@@ -121,9 +125,7 @@ export default class Plugin extends Vue {
     });
   }
 
-  setInactive() {
-    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
-    let lowCase = noSpace.toLowerCase();
+  setInactive(noSpace: string, lowCase: string) {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.inactive.forEach((element: any) => {
       if (element == lowCase) {
@@ -173,10 +175,10 @@ export default class Plugin extends Vue {
   }
 
   setNewData() {
-    let noSpace = this.$props.plugin.title.replace(/\s/g, "");
-    let lowCase = noSpace.toLowerCase();
-    let tn = this.$props.tabNumber;
-    //
+    let noSpace: string = this.$props.plugin.title.replace(/\s/g, "");
+    let lowCase: string = noSpace.toLowerCase();
+    let tn: string = this.$props.tabNumber;
+    //ignore
     if (this.status == 1) {
       let arr = this.dataCopy.data.tabdata[`tab${tn}`].active;
       let itemIndex = arr.indexOf(lowCase);
@@ -197,7 +199,7 @@ export default class Plugin extends Vue {
     console.log("--------------");
   }
 
-  pushData(this: any) {
+  pushData() {
     // this.$store
     //   .dispatch("postData", this.dataCopy)
     //   .then((response: any) => {
