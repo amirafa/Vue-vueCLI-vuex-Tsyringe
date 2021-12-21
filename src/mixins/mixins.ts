@@ -79,13 +79,12 @@ export class Mix extends Vue {
     );
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
     this.tabsProps = Object.entries(tabdata).map((e: any) => e);
-    //console.log(this.tabsProps);
+    console.log(this.$route.name);
 
     this.tabsProps.forEach((e: [string, Tab], i: number) => {
-      //console.log(e[0], e[1]);
-      if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
+      if (this.$route.name == "home") this.tabNum = 0;
+      else if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
     });
-    //console.log(this.tabNum);
   }
 
   setData() {
@@ -123,16 +122,13 @@ export class Mix extends Vue {
       this.pluginStatus.inactive.push(element);
     });
   }
- 
-  getStatusArr(params:any) {
+
+  getStatusArr(params: any) {
     var tabname = this.tabsProps[params][0];
     //ignor error
-    this.activeArr =
-      this.tabData.data.tabdata[tabname].active;
-    this.disabledArr =
-      this.tabData.data.tabdata[tabname].disabled;
-    this.inactiveArr =
-      this.tabData.data.tabdata[tabname].inactive;
+    this.activeArr = this.tabData.data.tabdata.tab1.active;
+    this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
+    this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
   }
 
   getTabPlugins() {
