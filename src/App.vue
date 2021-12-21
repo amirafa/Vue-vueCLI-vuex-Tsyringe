@@ -23,7 +23,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 import { Service } from "./class/Service";
-import { Myjson,DefaulMyjson } from "@/interface/interface";
+import { Myjson,DefaultMyjson } from "@/interface/interface";
 
 @Component({
   components: {
@@ -33,7 +33,7 @@ import { Myjson,DefaulMyjson } from "@/interface/interface";
 export default class App extends Vue {
   service: Service = new Service();
   isData: boolean = false;
-  fdata: Myjson = DefaulMyjson
+  fdata: Myjson = DefaultMyjson
   isToggled: boolean = true;
 
   data() {

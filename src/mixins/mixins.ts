@@ -2,53 +2,53 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator";
 import { Service } from "../class/Service";
+import { Myjson, DefaultMyjson } from "@/interface/interface";
 
 // You can declare mixins as the same style as components.
 @Component
 export class Tab extends Vue {
   @Prop() isToggled!: string;
 
-  tabData: any;
-  tabNum: any;
+  tabData: Myjson = DefaultMyjson;
+  tabNum: number = 0;
   allPlugins: any;
   allPluginsArr: any;
   tabPlugins: any;
   pluginStatus: any;
-  loading: any;
+  loading: boolean = true;
   global: any;
-  title: any;
-  activeArr: any;
-  disabledArr: any;
-  inactiveArr: any;
-  tabDatae: any;
-  tabPluginsArr: any;
-  tabNames: any;
+  title: string = "";
+  activeArr: Array<string> = [];
+  disabledArr: Array<string> = [];
+  inactiveArr: Array<string> = [];
+  tabPluginsArr: Array<string> = [];
+  tabNames: Array<string> = [];
   tabsProps: any;
 
   data() {
     return {
-      tabNum: 1,
+      tabNum: undefined,
       loading: true,
-      tabData: "",
+      tabData: undefined,
       pluginsActivate: undefined,
       pluginsDisabled: undefined,
       pluginsInactive: undefined,
       allPlugins: undefined,
-      allPluginsArr: [],
+      allPluginsArr: [] as Array<string>,
       tabPlugins: undefined,
-      tabPluginsArr: [],
+      tabPluginsArr: [] as Array<string>,
       title: undefined,
       pluginStatus: {
-        active: [],
-        disabled: [],
-        inactive: [],
+        active: [] as Array<string>,
+        disabled: [] as Array<string>,
+        inactive: [] as Array<string>,
       },
-      activeArr: [],
-      disabledArr: [],
-      inactiveArr: [],
+      activeArr: [] as Array<string>,
+      disabledArr: [] as Array<string>,
+      inactiveArr: [] as Array<string>,
       global: new Service(),
       tabNames: ["marketing", "finance", "personnel"],
-      tabsProps: [],
+      tabsProps: undefined,
     };
   }
 
@@ -64,7 +64,7 @@ export class Tab extends Vue {
   }
 
   @Watch("loading")
-  onLoadingChanged(newValue: any) {
+  onLoadingChanged(newValue: boolean) {
     //console.log("changed",newValue);
   }
 
@@ -72,6 +72,7 @@ export class Tab extends Vue {
     let tabdata = JSON.parse(JSON.stringify(this.$store.getters.getTabData));
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
     this.tabsProps = Object.entries(tabdata).map((e) => e);
+    //console.log(this.tabsProps);
 
     this.tabsProps.forEach((e: any, i: any) => {
       //console.log(e[0], e[1]);
@@ -96,7 +97,7 @@ export class Tab extends Vue {
     //
   }
 
-  setTitle(params: any) {
+  setTitle(params: number) {
     this.title = this.tabsProps[params][1].title;
   }
 
@@ -126,9 +127,9 @@ export class Tab extends Vue {
       this.tabData.data.tabdata[this.tabsProps[params][0]].inactive;
   }
 
-  getTabPlugins() {    
+  getTabPlugins() {
     this.allPluginsArr.forEach((a: any) => {
-      this.tabPlugins.forEach((b: any) => {
+      this.tabPlugins.forEach((b: string) => {
         let noSpace = a.title.replace(/\s/g, "");
         let lowCase = noSpace.toLowerCase();
         if (b == lowCase) {
