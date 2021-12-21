@@ -126,9 +126,9 @@ export class Mix extends Vue {
   getStatusArr(params: any) {
     var tabname = this.tabsProps[params][0];
     //ignor error
-    this.activeArr = this.tabData.data.tabdata.tab1.active;
-    this.disabledArr = this.tabData.data.tabdata.tab1.disabled;
-    this.inactiveArr = this.tabData.data.tabdata.tab1.inactive;
+    this.activeArr = this.tabData.data.tabdata[tabname].active;
+    this.disabledArr = this.tabData.data.tabdata[tabname].disabled;
+    this.inactiveArr = this.tabData.data.tabdata[tabname].inactive;
   }
 
   getTabPlugins() {
