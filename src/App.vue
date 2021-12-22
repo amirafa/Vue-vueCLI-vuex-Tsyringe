@@ -22,7 +22,8 @@
 <script lang="ts">
 import { Component, Vue} from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
-import { Service } from "./class/Service";
+import { Service } from "./class/service/Service";
+import { DiContainer} from "./class/dicontainer/DiContainer";
 import { Myjson } from "@/interface/interface";
 
 @Component({
@@ -69,10 +70,19 @@ export default class App extends Vue {
     // });
   }
 
+  // async getData(): Promise<Myjson> {
+  //   this.service = new Service();
+  //   try {
+  //     return await this.service.fetchData();
+  //   } catch (err: any) {
+  //     return err;
+  //   }
+  // }
+
   async getData(): Promise<Myjson> {
-    this.service = new Service();
+    const di=new DiContainer(new Service())
     try {
-      return await this.service.fetchData();
+      return await di.injectGet();
     } catch (err: any) {
       return err;
     }

@@ -25,8 +25,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { Service } from "@/class/Service";
+import { Service } from "@/class/service/Service";
 import { Myjson, Plugin } from "@/interface/interface";
+import { DiContainer } from "@/class/dicontainer/DiContainer";
 
 @Component({
   components: {},
@@ -212,10 +213,23 @@ export default class CardPlugin extends Vue {
     console.log("--------------");
   }
 
+  // pushData(): void {
+  //   this.service = new Service();
+  //   this.service
+  //     .postData(this.dataCopy)
+  //     .then((response: any) => {
+  //       console.log("Server Status = ", response.status);
+  //       //this.setCbLabel();
+  //     })
+  //     .catch((err: any) => {
+  //       console.log("Plugin -> pushData", err);
+  //       this.checkb.checked = !this.checkb.checked;
+  //       this.setCbLabel()
+  //     });
+  // }
   pushData(): void {
-    this.service = new Service();
-    this.service
-      .postData(this.dataCopy)
+    const di = new DiContainer(new Service());
+    di.injectPost(this.dataCopy)
       .then((response: any) => {
         console.log("Server Status = ", response.status);
         //this.setCbLabel();
@@ -223,7 +237,7 @@ export default class CardPlugin extends Vue {
       .catch((err: any) => {
         console.log("Plugin -> pushData", err);
         this.checkb.checked = !this.checkb.checked;
-        this.setCbLabel()
+        this.setCbLabel();
       });
   }
 }
