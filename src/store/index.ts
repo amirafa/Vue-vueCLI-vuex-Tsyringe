@@ -9,8 +9,8 @@ export default new Vuex.Store({
   state: {
     loadingStatus: false as boolean,
     data: {} as Myjson ,
-    getUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string, //.get(`http://localhost:3000/data`)
-    postUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string,
+    // getUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string, //.get(`http://localhost:3000/data`)
+    // postUrl: "https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130" as string,
   },
   mutations: {
     SET_LOADING_STATUS(state, status:boolean) {
