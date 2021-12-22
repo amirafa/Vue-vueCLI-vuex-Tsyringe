@@ -10,9 +10,9 @@
   </div>
 
   <div v-else class="container">
-    <div class="row">
-      <header class="p-2 m-0">
-        <h1>{{ title }}</h1>
+    <div class="row d-flex flex-row">
+      <header class="d-flex flex-row mb-0 p-2 align-items-center">
+        <h1 class="mb-0">{{ title }}</h1>
       </header>
       <div
         class="d-inline-flex col-12 col-md-4"

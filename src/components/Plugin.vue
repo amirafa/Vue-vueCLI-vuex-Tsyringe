@@ -200,16 +200,12 @@ export default class CardPlugin extends Vue {
       this.dataCopy.data.tabdata[`tab${tn}`].active.splice(itemIndex, 1);
       this.dataCopy.data.tabdata[`tab${tn}`].inactive.push(lowCase);
       this.status = 3;
-      //console.log("active : ",dataCopy.data.tabdata.tab1.active);
-      //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
     } else if (this.status == 3) {
       let arr = this.dataCopy.data.tabdata[`tab${tn}`].inactive;
       let itemIndex = arr.indexOf(lowCase);
       this.dataCopy.data.tabdata[`tab${tn}`].inactive.splice(itemIndex, 1);
       this.dataCopy.data.tabdata[`tab${tn}`].active.push(lowCase);
       this.status = 1;
-      //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
-      //console.log("active : ",dataCopy.data.tabdata.tab1.active);
     }
     console.log("here", this.dataCopy);
 
@@ -217,18 +213,6 @@ export default class CardPlugin extends Vue {
   }
 
   pushData(): void {
-    // this.$store
-    //   .dispatch("postData", this.dataCopy)
-    //   .then((response: any) => {
-    //     console.log("Server Status = ", response.status);
-    //     this.setCbLabel();
-    //     //this.$store.dispatch("setLoadingStatus",false)
-    //     //console.log(this.$store.getters.getLoadingStatus)
-    //   })
-    //   .catch((err: any) => {
-    //     console.log("Plugin -> pushData", err);
-    //     //this.checkb.checked=!this.checkb.checked
-    //   });
     this.service = new Service();
     this.service
       .postData(this.dataCopy)
@@ -238,6 +222,8 @@ export default class CardPlugin extends Vue {
       })
       .catch((err: any) => {
         console.log("Plugin -> pushData", err);
+        this.checkb.checked = !this.checkb.checked;
+        this.setCbLabel()
       });
   }
 }
