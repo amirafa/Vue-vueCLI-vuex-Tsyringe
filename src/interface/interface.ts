@@ -14,15 +14,15 @@ export interface Plugin {
   description: string;
 }
 
-export interface Tabdata {
-  tab1: Tab;
-  tab2: Tab;
-  tab3: Tab;
-}
-
 // export interface Tabdata {
-//   [key: string]: Plugin
+//   tab1: Tab;
+//   tab2: Tab;
+//   tab3: Tab;
 // }
+
+export interface Tabdata {
+  [key: string]: Tab
+}
 
 export interface Tab {
   title:    string;
