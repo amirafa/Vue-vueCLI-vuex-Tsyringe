@@ -48,7 +48,6 @@ export default class App extends Vue {
 
   created():void {
     console.log("App created");
-    console.log(this.$store.getters.getLoadingStatus);
   }
 
   mounted():void {

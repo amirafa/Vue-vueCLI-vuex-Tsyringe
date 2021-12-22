@@ -24,22 +24,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
-import axios from "axios";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { Service } from "@/class/Service";
-import { Myjson } from "@/interface/interface";
+import { Myjson, Plugin } from "@/interface/interface";
 
 @Component({
   components: {},
 })
-export default class Plugin extends Vue {
+export default class CardPlugin extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  @Prop() plugin!: any;
-  @Prop() pluginStatus!: any;
-  @Prop() isToggled!: any;
-  @Prop() tabData!: any;
-  @Prop() tabNumber!: any;
+  @Prop() plugin!: Plugin;
+  @Prop() pluginStatus!: {
+    active: Array<string>;
+    disabled: Array<string>;
+    inactive: Array<string>;
+  };
+  @Prop() isToggled!: boolean;
+  @Prop() tabNumber!: number;
 
+  tabData!: Myjson;
   status!: number;
   dataCopy!: Myjson;
   card: any;
@@ -55,46 +58,53 @@ export default class Plugin extends Vue {
       status: undefined,
       dataCopy: undefined,
       service: new Service(),
+      tabData: undefined,
     };
   }
 
-  created() {
+  created(): void {
     console.log("Plugins created");
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
     console.log("Plugin mounted");
-    this.tabData = this.$store.getters.getData;
+    //getData
+    this.getData();
+    //--------
     this.card = this.$refs.card;
     this.checkb = this.$refs.checkb;
     this.allow = this.$refs.allow;
-    this.dataCopy = JSON.parse(JSON.stringify(Object.assign({}, this.tabData)));
+
     this.checkCb();
   }
 
+  getData(): void {
+    this.tabData = this.$store.getters.getData;
+    this.dataCopy = JSON.parse(JSON.stringify(Object.assign({}, this.tabData)));
+  }
+
   @Watch("isToggled")
-  onIsToggledChanged(newValue: any) {
+  onIsToggledChanged(): void {
     //console.log("plugin watch",newValue);
     this.checkCb();
     // ... do whatever you need to do with the newValue here
   }
 
-  checkCb() {
+  checkCb(): void {
     this.checkToggle();
     this.setPreloadCheckbox();
     this.setCbLabel();
     //console.log(status.value)
   }
 
-  checkToggle() {
+  checkToggle(): void {
     this.checkb.disabled = !this.$props.isToggled;
     //---
-    let nodes = this.card.getElementsByTagName("*");
     this.makeDisabled(this.$props.isToggled);
   }
 
-  setPreloadCheckbox() {
+  setPreloadCheckbox(): void {
     let noSpace: string = this.$props.plugin.title.replace(/\s/g, "");
     let lowCase: string = noSpace.toLowerCase();
     this.setActive(noSpace, lowCase);
@@ -102,7 +112,7 @@ export default class Plugin extends Vue {
     this.setInactive(noSpace, lowCase);
   }
 
-  setActive(noSpace: string, lowCase: string) {
+  setActive(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.active.forEach((element: any) => {
       if (element == lowCase) {
@@ -114,7 +124,7 @@ export default class Plugin extends Vue {
     });
   }
 
-  setDisabled(noSpace: string, lowCase: string) {
+  setDisabled(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.disabled.forEach((element: any) => {
       if (element == lowCase) {
@@ -125,7 +135,7 @@ export default class Plugin extends Vue {
     });
   }
 
-  setInactive(noSpace: string, lowCase: string) {
+  setInactive(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
     this.$props.pluginStatus.inactive.forEach((element: any) => {
       if (element == lowCase) {
@@ -136,7 +146,7 @@ export default class Plugin extends Vue {
     });
   }
 
-  makeDisabled(bool: boolean) {
+  makeDisabled(bool: boolean): void {
     if (bool) {
       let nodes = this.card.getElementsByTagName("*");
       for (var i = 0; i < nodes.length; i++) {
@@ -145,22 +155,24 @@ export default class Plugin extends Vue {
       }
     } else {
       let nodes = this.card.getElementsByTagName("*");
-      for (var i = 0; i < nodes.length; i++) {
-        nodes[i].disabled = false;
-        nodes[i].style.userSelect = "all";
+      for (var j = 0; j < nodes.length; j++) {
+        nodes[j].disabled = false;
+        nodes[j].style.userSelect = "all";
       }
     }
   }
 
-  setCb() {
+  setCb(): void {
     //this.$store.dispatch("setLoadingStatus",true)
     //console.log(this.$store.getters.getLoadingStatus)
+    this.getData();
     this.setNewData();
+    this.setCbLabel();
     this.pushData();
     //console.log(dataCopy.value)
   }
 
-  setCbLabel() {
+  setCbLabel(): void {
     this.allow.style.fontSize = "1em";
     if (this.checkb.disabled) {
       this.allow.innerHTML = "disabled";
@@ -174,10 +186,12 @@ export default class Plugin extends Vue {
     }
   }
 
-  setNewData() {
+  setNewData(): void {
     let noSpace: string = this.$props.plugin.title.replace(/\s/g, "");
     let lowCase: string = noSpace.toLowerCase();
-    let tn: string = this.$props.tabNumber;
+    let tn: number = this.$props.tabNumber + 1;
+    console.log(noSpace, lowCase, tn);
+    console.log(this.dataCopy);
     //ignore
     if (this.status == 1) {
       let arr = this.dataCopy.data.tabdata[`tab${tn}`].active;
@@ -188,7 +202,7 @@ export default class Plugin extends Vue {
       //console.log("active : ",dataCopy.data.tabdata.tab1.active);
       //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
     } else if (this.status == 3) {
-      let arr = this.dataCopy.data.tabdata[`tab${tn}`].active;
+      let arr = this.dataCopy.data.tabdata[`tab${tn}`].inactive;
       let itemIndex = arr.indexOf(lowCase);
       this.dataCopy.data.tabdata[`tab${tn}`].inactive.splice(itemIndex, 1);
       this.dataCopy.data.tabdata[`tab${tn}`].active.push(lowCase);
@@ -196,10 +210,12 @@ export default class Plugin extends Vue {
       //console.log("inactive : ",dataCopy.data.tabdata.tab1.inactive);
       //console.log("active : ",dataCopy.data.tabdata.tab1.active);
     }
+    console.log("here", this.dataCopy);
+
     console.log("--------------");
   }
 
-  pushData() {
+  pushData(): void {
     // this.$store
     //   .dispatch("postData", this.dataCopy)
     //   .then((response: any) => {

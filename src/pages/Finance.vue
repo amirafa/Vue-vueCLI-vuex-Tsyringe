@@ -23,7 +23,6 @@
           :plugin="plugin"
           :plugin-status="pluginStatus"
           :is-toggled="isToggled"
-          :tab-data="tabData"
           :tab-number="tabNum"
         />
       </div>

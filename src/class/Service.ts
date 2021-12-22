@@ -50,7 +50,10 @@ export class Service {
         )
         .then((response) => {
           console.log("Server Response ", response);
+
           //store.dispatch("setLoadingStatus",false)
+          store.dispatch("setData",post)
+          
           resolve(response);
         })
         .catch(function (error) {

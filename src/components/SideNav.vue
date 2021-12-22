@@ -51,8 +51,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
-import router from "@/router";
+import { Component, Emit, Vue, Watch } from "vue-property-decorator";
 //import { useRoute,useRouter } from "vue-router";
 import { Myjson } from "@/interface/interface";
 
@@ -76,21 +75,21 @@ export default class SideNav extends Vue {
       cbText: undefined,
       routerLinks: undefined,
       sideNav: undefined,
-      router: undefined,
-      route: undefined,
       routeName: undefined,
+      route:undefined,
       routes: undefined,
       tabsProps: undefined,
     };
   }
 
-  created() {
+  created():void {
     console.log("SideNav created");
   }
 
-  mounted() {
+  mounted():void {
     this.route = this.$route;
     this.routerLinks = this.$refs.routerLinks;
+    
     console.log("SideNav mounted => route is : ", this.$route);
     //this.addRouterLink();
     //this.setLinkTilte();
@@ -98,18 +97,18 @@ export default class SideNav extends Vue {
   }
 
   @Watch("route")
-  onRouteChanged(newValue: any) {
+  onRouteChanged():void {
     //console.log("SideNav route changed");
     this.doThis();
   }
 
   @Watch("tabData")
-  ontabDataChange(newValue: any) {
+  ontabDataChange():void {
     //console.log("SideNav route changed");
     this.doThis();
   }
 
-  doThis() {
+  doThis():void {
     const routerLinks: any = this.$refs.routerLinks;
     if (this.$route.path != "/marketing" && this.$route.path != "/") {
       routerLinks.firstChild.classList.remove("router-link-exact-active");
@@ -149,14 +148,14 @@ export default class SideNav extends Vue {
   //   });
   // }
 
-  navClick() {
+  navClick():boolean {
     this.doThis();
     //console.log("clicked");
     return this.allEnable;
   }
 
   @Emit("")
-  changeCb() {
+  changeCb():boolean{
     this.allEnable = !this.allEnable;
     return this.allEnable;
   }

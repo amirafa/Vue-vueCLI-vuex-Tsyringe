@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
-import { Service } from "../class/Service";
+import { Prop } from "vue-property-decorator";
 import { Myjson, Tabdata, Plugin, Tab } from "@/interface/interface";
 
 // You can declare mixins as the same style as components.
@@ -14,20 +13,20 @@ export class Mix extends Vue {
   tabNum = 0;
   allPlugins!: Plugin;
   allPluginsArr!: Array<Plugin>;
-  tabPlugins!: {
+  tabPlugins!: Array<string>
+  pluginStatus!: {
     active: Array<string>;
     disabled: Array<string>;
     inactive: Array<string>;
   };
-  pluginStatus: any;
   loading = true;
   title = "";
   activeArr: Array<string> = [];
   disabledArr: Array<string> = [];
   inactiveArr: Array<string> = [];
-  tabPluginsArr: Array<string> = [];
+  tabPluginsArr: Array<Plugin> = [];
   tabNames: Array<string> = [];
-  tabsProps!: Array<[string, Tab]>;
+  tabsProps!: Array<Array<[string, Tab]>>;
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
@@ -52,7 +51,7 @@ export class Mix extends Vue {
       disabledArr: [] as Array<string>,
       inactiveArr: [] as Array<string>,
       tabNames: ["marketing", "finance", "personnel"] as Array<string>,
-      tabsProps: [] as Array<[string, Tab]>,
+      tabsProps: [] as Array<Array<[string, Tab]>>,
     };
   }
 
@@ -76,11 +75,16 @@ export class Mix extends Vue {
     const tabdata: Tabdata = JSON.parse(
       JSON.stringify(this.$store.getters.getTabData)
     );
+    console.log("tabData ",this.tabData);
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
-    this.tabsProps = Object.entries(tabdata).map((e: any) => e);
-    console.log(this.$route.name);
+    this.tabsProps = Object.entries(tabdata).map(function(e:Array<[string,Tab]>){
+      //console.log(e)
+      return e;
+    });
+    console.log("tabsProps ",this.tabsProps);
+    
 
-    this.tabsProps.forEach((e: [string, Tab], i: number) => {
+    this.tabsProps.forEach((e: Array<[string, Tab]>, i: number) => {
       if (this.$route.name == "home") this.tabNum = 0;
       else if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
     });
@@ -131,6 +135,7 @@ export class Mix extends Vue {
   }
 
   getTabPlugins(): void {
+    //console.log(this.allPluginsArr);
     this.allPluginsArr.forEach((a: Plugin) => {
       this.tabPlugins.forEach((b: string) => {
         const noSpace = a.title.replace(/\s/g, "");
