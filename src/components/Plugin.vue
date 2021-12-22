@@ -50,6 +50,7 @@ export default class CardPlugin extends Vue {
   allow: any;
   service!: Service;
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       checkb: null,
@@ -114,7 +115,7 @@ export default class CardPlugin extends Vue {
 
   setActive(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
-    this.$props.pluginStatus.active.forEach((element: any) => {
+    this.$props.pluginStatus.active.forEach((element: string) => {
       if (element == lowCase) {
         //console.log(element, lowCase);
         //console.log(root);
@@ -126,7 +127,7 @@ export default class CardPlugin extends Vue {
 
   setDisabled(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
-    this.$props.pluginStatus.disabled.forEach((element: any) => {
+    this.$props.pluginStatus.disabled.forEach((element: string) => {
       if (element == lowCase) {
         //console.log(element, lowCase);
         this.status = 2;
@@ -137,7 +138,7 @@ export default class CardPlugin extends Vue {
 
   setInactive(noSpace: string, lowCase: string): void {
     //console.log(props.pluginStatus.active,lowCase)
-    this.$props.pluginStatus.inactive.forEach((element: any) => {
+    this.$props.pluginStatus.inactive.forEach((element: string) => {
       if (element == lowCase) {
         //console.log(element, lowCase);
         this.status = 3;
