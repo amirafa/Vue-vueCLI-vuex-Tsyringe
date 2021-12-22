@@ -25,7 +25,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { Service } from "@/class/service/Service";
 import { Myjson, Plugin } from "@/interface/interface";
 import { DiContainer } from "@/class/dicontainer/DiContainer";
 
@@ -49,7 +48,6 @@ export default class CardPlugin extends Vue {
   card: any;
   checkb: any;
   allow: any;
-  service!: Service;
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
@@ -59,7 +57,6 @@ export default class CardPlugin extends Vue {
       allow: null,
       status: undefined,
       dataCopy: undefined,
-      service: new Service(),
       tabData: undefined,
     };
   }
@@ -228,7 +225,7 @@ export default class CardPlugin extends Vue {
   //     });
   // }
   pushData(): void {
-    const di = new DiContainer(new Service());
+    const di = new DiContainer();
     di.injectPost(this.dataCopy)
       .then((response: any) => {
         console.log("Server Status = ", response.status);

@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Component, Vue} from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
-import { Service } from "./class/service/Service";
+//import { Service } from "./class/service/Service";
 import { DiContainer} from "./class/dicontainer/DiContainer";
 import { Myjson } from "@/interface/interface";
 
@@ -32,7 +32,6 @@ import { Myjson } from "@/interface/interface";
   },
 })
 export default class App extends Vue {
-  service: Service = new Service();
   isData!: boolean ;
   fdata!: Myjson;
   isToggled!: boolean;
@@ -43,7 +42,6 @@ export default class App extends Vue {
       fdata: undefined,
       isData: undefined,
       isToggled: undefined,
-      service: undefined,
     };
   }
 
@@ -80,7 +78,7 @@ export default class App extends Vue {
   // }
 
   async getData(): Promise<Myjson> {
-    const di=new DiContainer(new Service())
+    const di=new DiContainer()
     try {
       return await di.injectGet();
     } catch (err: any) {

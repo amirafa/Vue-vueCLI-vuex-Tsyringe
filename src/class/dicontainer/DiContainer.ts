@@ -3,10 +3,10 @@ import { Myjson } from "@/interface/interface";
 
 export class DiContainer {
 
-    service: any;
+    service: Service
 
-    constructor(service:any){
-        this.service = service
+    constructor(){
+        this.service = new Service();
     }
 
     async injectGet():Promise<Myjson>{
