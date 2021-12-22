@@ -20,6 +20,10 @@ export interface Tabdata {
   tab3: Tab;
 }
 
+// export interface Tabdata {
+//   [key: string]: Plugin
+// }
+
 export interface Tab {
   title:    string;
   icon:     string;

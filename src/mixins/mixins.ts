@@ -13,7 +13,7 @@ export class Mix extends Vue {
   tabNum = 0;
   allPlugins!: Plugin;
   allPluginsArr!: Array<Plugin>;
-  tabPlugins!: Array<string>
+  tabPlugins!: Array<string>;
   pluginStatus!: {
     active: Array<string>;
     disabled: Array<string>;
@@ -26,7 +26,7 @@ export class Mix extends Vue {
   inactiveArr: Array<string> = [];
   tabPluginsArr: Array<Plugin> = [];
   tabNames: Array<string> = [];
-  tabsProps!: Array<Array<[string, Tab]>>;
+  tabsProps!: Array<[string, Tab]>;
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
@@ -51,7 +51,7 @@ export class Mix extends Vue {
       disabledArr: [] as Array<string>,
       inactiveArr: [] as Array<string>,
       tabNames: ["marketing", "finance", "personnel"] as Array<string>,
-      tabsProps: [] as Array<Array<[string, Tab]>>,
+      tabsProps: [] as Array<[string, Tab]>,
     };
   }
 
@@ -75,16 +75,15 @@ export class Mix extends Vue {
     const tabdata: Tabdata = JSON.parse(
       JSON.stringify(this.$store.getters.getTabData)
     );
-    console.log("tabData ",this.tabData);
+    console.log("tabData ", this.tabData);
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
-    this.tabsProps = Object.entries(tabdata).map(function(e:Array<[string,Tab]>){
-      //console.log(e)
+    this.tabsProps = Object.entries(tabdata).map(function (e: [string, Tab]) {
+      console.log(e);
       return e;
     });
-    console.log("tabsProps ",this.tabsProps);
-    
+    console.log("tabsProps ", this.tabsProps);
 
-    this.tabsProps.forEach((e: Array<[string, Tab]>, i: number) => {
+    this.tabsProps.forEach((e: [string, Tab], i: number) => {
       if (this.$route.name == "home") this.tabNum = 0;
       else if (this.$route.name == e[1].title.toLowerCase()) this.tabNum = i;
     });
