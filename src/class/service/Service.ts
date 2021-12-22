@@ -13,7 +13,7 @@ export class Service {
     this.postUrl="https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130"
   }
 
-  fetchData(): Promise<Myjson> {
+  getData(): Promise<Myjson> {
     store.dispatch("setLoadingStatus",true)
     return new Promise((resolve:any, reject:any) => {
       axios

@@ -10,7 +10,7 @@ export class DiContainer {
     }
 
     async injectGet():Promise<Myjson>{
-        return await this.service.fetchData();
+        return await this.service.getData();
     }
 
     async injectPost(data:Myjson):Promise<any>{
