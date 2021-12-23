@@ -26,7 +26,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { Myjson, Plugin } from "@/interface/interface";
-import { DiContainer } from "@/class/dicontainer/DiContainer";
+import "reflect-metadata";
+import {container} from "tsyringe";
+import { DiContainer} from "@/class/dicontainer/DiContainer";
 
 @Component({
   components: {},

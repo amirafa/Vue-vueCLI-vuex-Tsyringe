@@ -23,6 +23,8 @@
 import { Component, Vue} from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 //import { Service } from "./class/service/Service";
+import "reflect-metadata";
+import {container} from "tsyringe";
 import { DiContainer} from "./class/dicontainer/DiContainer";
 import { Myjson } from "@/interface/interface";
 
