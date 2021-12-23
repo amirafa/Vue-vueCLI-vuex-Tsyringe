@@ -80,7 +80,8 @@ export default class App extends Vue {
   // }
 
   async getData(): Promise<Myjson> {
-    const di=new DiContainer()
+    const di=container.resolve(DiContainer);
+    //const di=new DiContainer()
     try {
       return await di.injectGet();
     } catch (err: any) {
