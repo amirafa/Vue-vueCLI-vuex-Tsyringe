@@ -117,7 +117,7 @@ export default class SideNav extends Vue {
     }
   }
 
-  // setLinkTilte() {   //مشکل دارد
+  // setLinkTilte() {   //problem
   //   console.log("here...")
     
   //   console.log("here1...",this.$store.getters.getTabData)
