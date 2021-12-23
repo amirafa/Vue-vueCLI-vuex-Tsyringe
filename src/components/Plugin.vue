@@ -227,7 +227,8 @@ export default class CardPlugin extends Vue {
   //     });
   // }
   pushData(): void {
-    const di = new DiContainer();
+    const di=container.resolve(DiContainer);
+    //const di = new DiContainer();
     di.injectPost(this.dataCopy)
       .then((response: any) => {
         console.log("Server Status = ", response.status);
