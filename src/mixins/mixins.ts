@@ -78,7 +78,7 @@ export class Mix extends Vue {
     console.log("tabData ", this.tabData);
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
     this.tabsProps = Object.entries(tabdata).map(function (e: [string, Tab]) {
-      console.log(e);
+      //console.log(e);
       return e;
     });
     console.log("tabsProps ", this.tabsProps);
