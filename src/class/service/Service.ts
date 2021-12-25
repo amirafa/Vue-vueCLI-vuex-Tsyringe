@@ -9,8 +9,8 @@ export class Service {
 
   constructor() {
     this.data = "";
-    this.getUrl="https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130"
-    this.postUrl="https://run.mocky.io/v3/c18c464e-6771-4de2-8d09-603c09624130"
+    this.getUrl=process.env.VUE_APP_API_BASE
+    this.postUrl=process.env.VUE_APP_API_BASE
   }
 
   getData(): Promise<Myjson> {
