@@ -54,7 +54,7 @@ export default class App extends Vue {
   }
 
   mounted():void {
-    this.getData()
+    this.fetchData()
       .then((respnse: Myjson) => {
         this.fdata = respnse;
         //console.log(this.fdata);
@@ -81,7 +81,7 @@ export default class App extends Vue {
   //   }
   // }
 
-  async getData(): Promise<Myjson> {
+  async fetchData(): Promise<Myjson> {
     const di=container.resolve(DiContainer);
     //const di=new DiContainer()
     try {
