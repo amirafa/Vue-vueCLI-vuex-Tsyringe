@@ -212,20 +212,6 @@ export default class CardPlugin extends Vue {
     console.log("--------------");
   }
 
-  // pushData(): void {
-  //   this.service = new Service();
-  //   this.service
-  //     .postData(this.dataCopy)
-  //     .then((response: any) => {
-  //       console.log("Server Status = ", response.status);
-  //       //this.setCbLabel();
-  //     })
-  //     .catch((err: any) => {
-  //       console.log("Plugin -> pushData", err);
-  //       this.checkb.checked = !this.checkb.checked;
-  //       this.setCbLabel()
-  //     });
-  // }
   pushData(): void {
     const di=container.resolve(DiContainer);
     //const di = new DiContainer();
@@ -240,6 +226,20 @@ export default class CardPlugin extends Vue {
         this.setCbLabel();
       });
   }
+  // pushData(): void {
+  //   this.service = new Service();
+  //   this.service
+  //     .postData(this.dataCopy)
+  //     .then((response: any) => {
+  //       console.log("Server Status = ", response.status);
+  //       //this.setCbLabel();
+  //     })
+  //     .catch((err: any) => {
+  //       console.log("Plugin -> pushData", err);
+  //       this.checkb.checked = !this.checkb.checked;
+  //       this.setCbLabel()
+  //     });
+  // }
 }
 </script>
 
