@@ -21,7 +21,7 @@ export class Service {
         .get(this.getUrl)
         .then(function (response) {
           console.log(response);
-          console.log("Get : ", response.data);
+          //console.log("Get : ", response.data);
           store.dispatch('setData',response.data)
           store.dispatch("setLoadingStatus",false)
           resolve(response.data);

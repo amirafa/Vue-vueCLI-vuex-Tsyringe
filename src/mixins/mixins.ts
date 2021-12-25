@@ -75,13 +75,13 @@ export class Mix extends Vue {
     const tabdata: Tabdata = JSON.parse(
       JSON.stringify(this.$store.getters.getTabData)
     );
-    console.log("tabData ", this.tabData);
+    //console.log("tabData ", this.tabData);
     //this.tabsProps = Object.entries(tabdata).map((e) => ({[e[0]]:e[1]}));
     this.tabsProps = Object.entries(tabdata).map(function (e: [string, Tab]) {
       //console.log(e);
       return e;
     });
-    console.log("tabsProps ", this.tabsProps);
+    //console.log("tabsProps ", this.tabsProps);
 
     this.tabsProps.forEach((e: [string, Tab], i: number) => {
       if (this.$route.name == "home") this.tabNum = 0;
