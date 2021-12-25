@@ -2,7 +2,7 @@
 import store from '@/store/index'
 import { Myjson } from "@/interface/interface";
 
-export class Service {
+export class ServiceTwo {
   data: string;
 
   constructor() {
