@@ -6,7 +6,7 @@ import { inject, injectable } from "tsyringe";
 export class DiContainer {
   //myService: Service
 
-  constructor(@inject(Service) public myService: Service) {
+  constructor(@inject(Service) private myService: Service) {
     // this.myService = new Service();
   }
 
