@@ -1,15 +1,20 @@
 //import axios from "axios";
 import store from '@/store/index'
 import { Myjson } from "@/interface/interface";
+import { ServiceInterface } from "./ServiceInterface";
 
-export class ServiceTwo {
+export class Service implements ServiceInterface{
   data: string;
+  getUrl:string;
+  postUrl:string;
 
   constructor() {
     this.data = "";
+    this.getUrl=process.env.VUE_APP_API_TEST
+    this.postUrl=process.env.VUE_APP_API_TEST
   }
 
-  fetchData(): Promise<Myjson> {
+  getData(): Promise<Myjson> {
     store.dispatch("setLoadingStatus",true)
     return new Promise((resolve) => {
       setTimeout(resolve, 1000);

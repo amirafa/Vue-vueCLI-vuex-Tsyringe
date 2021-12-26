@@ -1,8 +1,9 @@
 import axios from "axios";
 import store from '@/store/index'
 import { Myjson } from "@/interface/interface";
+import { ServiceInterface } from "./ServiceInterface";
 
-export class Service {
+export class Service  implements ServiceInterface{
   data: string;
   getUrl:string;
   postUrl:string;
