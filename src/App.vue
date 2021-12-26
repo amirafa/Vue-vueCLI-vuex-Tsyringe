@@ -50,7 +50,6 @@ export default class App extends Vue {
 
   created(): void {
     console.log("App created");
-    console.log(".env", process.env.VUE_APP_API_BASE);
   }
 
   mounted(): void {
