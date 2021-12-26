@@ -5,6 +5,6 @@ export interface ServiceInterface {
   getUrl: string;
   postUrl: string;
 
-  getData(): void;
+  getData():  Promise<Myjson>;
   postData(post: Myjson): Promise<string>;
 }

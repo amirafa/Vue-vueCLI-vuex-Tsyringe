@@ -29,6 +29,8 @@ import { Myjson, Plugin } from "@/interface/interface";
 import "reflect-metadata";
 import {container} from "tsyringe";
 import { DiContainer} from "@/class/dicontainer/DiContainer";
+import { Service } from "@/class/service/Service";
+
 
 @Component({
   components: {},
@@ -213,7 +215,10 @@ export default class CardPlugin extends Vue {
   }
 
   pushData(): void {
-    const di=container.resolve(DiContainer);
+    container.register("ServiceInterface", {
+      useClass: Service,
+    });
+    const di = container.resolve(DiContainer);
     //const di = new DiContainer();
     di.injectPost(this.dataCopy)
       .then((response: any) => {

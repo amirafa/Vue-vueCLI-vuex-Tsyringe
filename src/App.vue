@@ -20,13 +20,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import SideNav from "./components/SideNav.vue";
 //import { Service } from "./class/service/Service";
 import "reflect-metadata";
-import {container} from "tsyringe";
-import { DiContainer} from "./class/dicontainer/DiContainer";
+import { container } from "tsyringe";
+import { DiContainer } from "./class/dicontainer/DiContainer";
 import { Myjson } from "@/interface/interface";
+import { Service } from "@/class/service/Service";
 
 @Component({
   components: {
@@ -34,7 +35,7 @@ import { Myjson } from "@/interface/interface";
   },
 })
 export default class App extends Vue {
-  isData!: boolean ;
+  isData!: boolean;
   fdata!: Myjson;
   isToggled!: boolean;
 
@@ -47,13 +48,12 @@ export default class App extends Vue {
     };
   }
 
-  created():void {
+  created(): void {
     console.log("App created");
-    console.log(".env",process.env.VUE_APP_API_BASE);
-    
+    console.log(".env", process.env.VUE_APP_API_BASE);
   }
 
-  mounted():void {
+  mounted(): void {
     this.fetchData()
       .then((respnse: Myjson) => {
         this.fdata = respnse;
@@ -82,8 +82,10 @@ export default class App extends Vue {
   // }
 
   async fetchData(): Promise<Myjson> {
-    const di=container.resolve(DiContainer);
-    //const di=new DiContainer()
+    container.register("ServiceInterface", {
+      useClass: Service,
+    });
+    const di = container.resolve(DiContainer);
     try {
       return await di.injectGet();
     } catch (err: any) {
